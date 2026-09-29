@@ -1,0 +1,12 @@
+﻿# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Sistema
+Thumbs.db
+desktop.ini
+
+# Configuracion local con credenciales
+**/application-local.properties
+.env
