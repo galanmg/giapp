@@ -1,0 +1,35 @@
+@startuml casos-de-uso-general
+' GIAPP - Diagrama de contexto: actores y casos comunes
+' Autor: Andres Moreno
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Usuario" as usuario <<abstracto>>
+actor "Cliente" as cliente
+actor "Gestor" as gestor
+actor "Planificador" as tiempo
+
+rectangle "GIAPP" {
+  usecase "Iniciar sesion" as UC01
+  usecase "Cerrar sesion" as UC02
+  usecase "Gestionar perfil" as UC03
+
+  usecase "Area del cliente" as M1
+  usecase "Gestion del\naparcamiento" as M2
+  usecase "Facturacion\ny accesos" as M3
+}
+
+cliente --|> usuario
+gestor --|> usuario
+
+usuario --> UC01
+usuario --> UC02
+usuario --> UC03
+
+cliente --> M1
+gestor --> M2
+gestor --> M3
+tiempo --> M3
+
+@enduml

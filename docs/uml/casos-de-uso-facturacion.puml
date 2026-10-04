@@ -1,0 +1,40 @@
+@startuml casos-de-uso-facturacion
+' GIAPP - Casos de uso: facturacion y control de accesos
+' Autor: Andres Moreno
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Gestor" as gestor
+actor "Planificador" as tiempo
+
+rectangle "GIAPP" {
+  usecase "Registrar lectura\nde contador" as UC40
+  usecase "Generar recibos\ndel periodo" as UC41
+  usecase "Calcular regularizacion\nelectrica" as UC42
+  usecase "Marcar recibos\nvencidos" as UC43
+  usecase "Registrar pago\nde recibo" as UC44
+  usecase "Consultar impagados" as UC45
+  usecase "Consultar ingresos" as UC46
+
+  usecase "Validar acceso QR" as UC50
+  usecase "Comprobar estado\nde pago" as UC51
+  usecase "Registrar\nentrada/salida" as UC52
+  usecase "Consultar historico\nde accesos" as UC53
+}
+
+gestor --> UC40
+gestor --> UC44
+gestor --> UC45
+gestor --> UC46
+gestor --> UC50
+gestor --> UC53
+
+tiempo --> UC41
+tiempo --> UC43
+
+UC42 ..> UC41 : <<extend>>
+UC50 ..> UC51 : <<include>>
+UC50 ..> UC52 : <<include>>
+
+@enduml

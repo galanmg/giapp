@@ -1,0 +1,27 @@
+@startuml casos-de-uso-cliente
+' GIAPP - Casos de uso: area del cliente
+' Autor: Andres Moreno
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Cliente" as cliente
+
+rectangle "GIAPP" {
+  usecase "Consultar mi contrato" as UC10
+  usecase "Consultar mis vehiculos" as UC11
+  usecase "Consultar mis recibos" as UC12
+  usecase "Ver desglose\ndel recibo" as UC13
+  usecase "Consultar mi\nconsumo electrico" as UC14
+  usecase "Mostrar QR de acceso" as UC15
+}
+
+cliente --> UC10
+cliente --> UC11
+cliente --> UC12
+cliente --> UC14
+cliente --> UC15
+
+UC12 ..> UC13 : <<include>>
+
+@enduml

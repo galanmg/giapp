@@ -1,0 +1,48 @@
+@startuml casos-de-uso-gestion
+' GIAPP - Casos de uso: gestion de inventario y contratos
+' Autor: Andres Moreno
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "Gestor" as gestor
+
+rectangle "GIAPP" {
+  usecase "Gestionar clientes" as UC20
+  usecase "Gestionar vehiculos" as UC21
+  usecase "Gestionar aparcamientos" as UC22
+  usecase "Gestionar plantas" as UC23
+  usecase "Gestionar plazas" as UC24
+  usecase "Gestionar enchufes" as UC25
+  usecase "Gestionar tarifas" as UC26
+  usecase "Gestionar promociones" as UC27
+  usecase "Consultar ocupacion" as UC28
+
+  usecase "Crear contrato" as UC30
+  usecase "Calcular primer periodo" as UC31
+  usecase "Aplicar promocion" as UC32
+  usecase "Asignar enchufe" as UC33
+  usecase "Cambiar de plaza" as UC34
+  usecase "Finalizar contrato" as UC35
+  usecase "Consultar contratos" as UC36
+}
+
+gestor --> UC20
+gestor --> UC21
+gestor --> UC22
+gestor --> UC23
+gestor --> UC24
+gestor --> UC25
+gestor --> UC26
+gestor --> UC27
+gestor --> UC28
+gestor --> UC30
+gestor --> UC34
+gestor --> UC35
+gestor --> UC36
+
+UC30 ..> UC31 : <<include>>
+UC32 ..> UC30 : <<extend>>
+UC33 ..> UC30 : <<extend>>
+
+@enduml
