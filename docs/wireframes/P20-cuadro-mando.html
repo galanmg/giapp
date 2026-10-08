@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P20 Cuadro de mando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<div class="app">
+
+	<aside class="lateral">
+		<div class="marca">
+			<div class="p">P</div>
+			<div class="nombre">GIAPP</div>
+		</div>
+		<nav class="menu">
+			<a class="activo" href="P20-cuadro-mando.html">Cuadro de mando</a>
+			<div class="grupo">Aparcamiento</div>
+			<a href="P23-plano-plazas.html">Plano de plazas</a>
+			<a href="#">Tarifas y promociones</a>
+			<div class="grupo">Abonados</div>
+			<a href="#">Clientes</a>
+			<a href="P28-alta-contrato.html">Contratos</a>
+			<div class="grupo">Cobros</div>
+			<a href="P30-impagados.html">Recibos</a>
+			<a href="#">Lecturas de contador</a>
+			<div class="grupo">Accesos</div>
+			<a href="#">Validar acceso</a>
+		</nav>
+		<div class="sesion">
+			Andrés Moreno
+			<a href="P01-login.html">Cerrar sesión</a>
+		</div>
+	</aside>
+
+	<main class="principal">
+
+		<div class="cabecera">
+			<div>
+				<div class="sitio">Parking Juan Bosco · Alcázar de San Juan</div>
+				<h1>Cuadro de mando</h1>
+			</div>
+			<a class="boton" href="P28-alta-contrato.html">Nuevo contrato</a>
+		</div>
+
+		<div class="rejilla cuatro" style="margin-bottom:22px">
+			<div class="metrica">
+				<span class="cifra">41 / 48</span>
+				<div class="rotulo">Plazas ocupadas</div>
+				<div class="medidor"><span style="width:85%"></span></div>
+				<div class="nota">7 libres · 85 % de ocupación</div>
+			</div>
+			<div class="metrica">
+				<span class="cifra">41</span>
+				<div class="rotulo">Contratos activos</div>
+				<div class="nota">34 coches y 7 motos</div>
+			</div>
+			<div class="metrica alerta">
+				<span class="cifra">3</span>
+				<div class="rotulo">Recibos impagados</div>
+				<div class="nota">1.045,80 € pendientes de cobro</div>
+			</div>
+			<div class="metrica">
+				<span class="cifra">2.640 €</span>
+				<div class="rotulo">Cobrado en octubre</div>
+				<div class="nota">De 3.685,80 € emitidos</div>
+			</div>
+		</div>
+
+		<div class="rejilla dos">
+
+			<div class="tarjeta">
+				<h2>Impagados</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Abonado</th>
+							<th>Plaza</th>
+							<th>Venció</th>
+							<th class="num">Importe</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Javier Pozo Alarcón</td>
+							<td>07</td>
+							<td>5 ago</td>
+							<td class="num">366,60 €</td>
+						</tr>
+						<tr>
+							<td>Nuria Bermejo Gil</td>
+							<td>23</td>
+							<td>5 sep</td>
+							<td class="num">174,00 €</td>
+						</tr>
+						<tr>
+							<td>Tomás Herrera Liébana</td>
+							<td>31</td>
+							<td>5 oct</td>
+							<td class="num">505,20 €</td>
+						</tr>
+					</tbody>
+				</table>
+				<a class="boton secundario ancho" style="margin-top:16px" href="P30-impagados.html">Ver todos los recibos</a>
+			</div>
+
+			<div class="tarjeta">
+				<h2>Vencen este mes</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Abonado</th>
+							<th>Periodo</th>
+							<th class="num">Importe</th>
+							<th>Estado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Marta Ruiz Delgado</td>
+							<td>Jul – dic</td>
+							<td class="num">366,60 €</td>
+							<td><span class="estado pendiente">Pendiente</span></td>
+						</tr>
+						<tr>
+							<td>Lucía Cano Prieto</td>
+							<td>Octubre</td>
+							<td class="num">55,00 €</td>
+							<td><span class="estado pagado">Pagado</span></td>
+						</tr>
+						<tr>
+							<td>Emilio Vaquero Sanz</td>
+							<td>Oct – dic</td>
+							<td class="num">174,00 €</td>
+							<td><span class="estado pagado">Pagado</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
+		<div class="tarjeta">
+			<h2>Pendiente de hacer</h2>
+			<table>
+				<tbody>
+					<tr>
+						<td>Leer los contadores de la planta -1</td>
+						<td class="num"><a href="#">Registrar lecturas</a></td>
+					</tr>
+					<tr>
+						<td>La plaza 19 lleva 3 meses libre</td>
+						<td class="num"><a href="P23-plano-plazas.html">Ver el plano</a></td>
+					</tr>
+					<tr>
+						<td>El contrato de Javier Pozo vence el 31 de diciembre</td>
+						<td class="num"><a href="#">Abrir contrato</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</main>
+
+</div>
+
+</body>
+</html>

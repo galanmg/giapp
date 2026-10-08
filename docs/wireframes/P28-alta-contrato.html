@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P28 Nuevo contrato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.columnas { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+	.par { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+
+	.resumen { position: sticky; top: 30px; }
+
+	.resumen .linea {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 9px 0;
+		border-bottom: 1px solid var(--borde);
+		font-size: 15px;
+	}
+
+	.resumen .linea span:last-child { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+	.resumen .suma {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding-top: 13px;
+		margin-top: 4px;
+		border-top: 2px solid var(--tinta);
+	}
+
+	.resumen .suma b {
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 600;
+		font-size: 26px;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.prorrateo {
+		background: var(--azul-suave);
+		color: var(--azul-hondo);
+		border-radius: 5px;
+		padding: 12px 14px;
+		font-size: 14px;
+		line-height: 1.5;
+		margin-top: 14px;
+	}
+
+	@media (max-width: 1100px) {
+		.columnas { grid-template-columns: 1fr; }
+		.resumen { position: static; }
+	}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+	<aside class="lateral">
+		<div class="marca">
+			<div class="p">P</div>
+			<div class="nombre">GIAPP</div>
+		</div>
+		<nav class="menu">
+			<a href="P20-cuadro-mando.html">Cuadro de mando</a>
+			<div class="grupo">Aparcamiento</div>
+			<a href="P23-plano-plazas.html">Plano de plazas</a>
+			<a href="#">Tarifas y promociones</a>
+			<div class="grupo">Abonados</div>
+			<a href="#">Clientes</a>
+			<a class="activo" href="P28-alta-contrato.html">Contratos</a>
+			<div class="grupo">Cobros</div>
+			<a href="P30-impagados.html">Recibos</a>
+			<a href="#">Lecturas de contador</a>
+			<div class="grupo">Accesos</div>
+			<a href="#">Validar acceso</a>
+		</nav>
+		<div class="sesion">
+			Andrés Moreno
+			<a href="P01-login.html">Cerrar sesión</a>
+		</div>
+	</aside>
+
+	<main class="principal">
+
+		<div class="cabecera">
+			<div>
+				<div class="sitio"><a href="P20-cuadro-mando.html">Parking Juan Bosco</a> · Contratos</div>
+				<h1>Nuevo contrato</h1>
+			</div>
+		</div>
+
+		<form class="columnas" action="#" method="post">
+
+			<div>
+
+				<div class="tarjeta">
+					<h3>Abonado y vehículo</h3>
+
+					<div class="campo">
+						<label for="cliente">Cliente</label>
+						<select id="cliente">
+							<option>Raúl Montes Carrión</option>
+							<option>Marta Ruiz Delgado</option>
+							<option>Nuria Bermejo Gil</option>
+						</select>
+						<div class="ayuda">¿Es nuevo? <a href="#">Darlo de alta primero</a></div>
+					</div>
+
+					<div class="campo">
+						<label for="vehiculo">Vehículo</label>
+						<select id="vehiculo">
+							<option>Peugeot 306 · CR 3450 X · Coche</option>
+							<option>Honda PCX · 9087 MNB · Moto</option>
+						</select>
+						<div class="ayuda">Un coche ocupa 2 medias plazas, una moto ocupa 1.</div>
+					</div>
+				</div>
+
+				<div class="tarjeta">
+					<h3>Plaza</h3>
+
+					<div class="par">
+						<div class="campo">
+							<label for="planta">Planta</label>
+							<select id="planta">
+								<option>Planta -1</option>
+								<option>Planta -2</option>
+								<option>Planta -3</option>
+							</select>
+						</div>
+						<div class="campo">
+							<label for="plaza">Plaza</label>
+							<select id="plaza">
+								<option>03 · libre · admite coche</option>
+								<option>08 · libre · admite coche</option>
+								<option>19 · libre · admite coche</option>
+								<option>14 · media libre · solo motos</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="ayuda" style="margin-top:-8px">
+						Solo salen las plazas con capacidad suficiente para el vehículo elegido.
+						<a href="P23-plano-plazas.html">Ver el plano</a>
+					</div>
+				</div>
+
+				<div class="tarjeta">
+					<h3>Condiciones</h3>
+
+					<div class="par">
+						<div class="campo">
+							<label for="inicio">Fecha de alta</label>
+							<input type="text" id="inicio" value="15/10/2026">
+						</div>
+						<div class="campo">
+							<label for="periodicidad">Periodicidad de pago</label>
+							<select id="periodicidad">
+								<option>Mensual</option>
+								<option>Trimestral</option>
+								<option selected>Semestral</option>
+								<option>Anual</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="par">
+						<div class="campo">
+							<label for="precio">Mensualidad</label>
+							<input type="text" id="precio" value="55,00 €">
+							<div class="ayuda">Tarifa vigente para coche</div>
+						</div>
+						<div class="campo">
+							<label for="promo">Promoción</label>
+							<select id="promo">
+								<option>Ninguna</option>
+								<option>OTONO26 · 10 % de descuento</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="tarjeta">
+					<h3>Enchufe</h3>
+					<div class="par">
+						<div class="campo">
+							<label for="enchufe">Punto de recarga</label>
+							<select id="enchufe">
+								<option>Sin enchufe</option>
+								<option selected>E-12A · libre</option>
+							</select>
+						</div>
+						<div class="campo">
+							<label for="provision">Provisión mensual estimada</label>
+							<input type="text" id="provision" value="8,00 €">
+							<div class="ayuda">Se regulariza con la lectura real</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<aside class="tarjeta resumen">
+				<h3>Primer recibo</h3>
+
+				<div class="linea"><span>Periodo</span><span>15 oct – 31 dic</span></div>
+				<div class="linea"><span>Meses</span><span>2,5</span></div>
+				<div class="linea"><span>Alquiler</span><span>137,50 €</span></div>
+				<div class="linea"><span>Provisión eléctrica</span><span>20,00 €</span></div>
+				<div class="linea"><span>Regularización</span><span>—</span></div>
+
+				<div class="suma">
+					<span>Total</span>
+					<b>157,50 €</b>
+				</div>
+
+				<div class="prorrateo">
+					El pago es semestral, y el semestre en curso acaba el 31 de diciembre.
+					Este primer recibo cubre solo hasta esa fecha; a partir del 1 de enero
+					se cobrarán semestres completos.
+				</div>
+
+				<button class="boton ancho" style="margin-top:18px" type="submit">Crear contrato</button>
+				<a class="boton secundario ancho" style="margin-top:9px" href="P20-cuadro-mando.html">Cancelar</a>
+			</aside>
+
+		</form>
+
+	</main>
+
+</div>
+
+</body>
+</html>

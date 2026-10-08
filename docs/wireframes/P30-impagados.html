@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P30 Recibos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 20px; }
+	.filtros .campo { margin-bottom: 0; }
+	.filtros select, .filtros input { min-width: 170px; }
+	.filtros .buscar { flex: 1; min-width: 200px; }
+	.filtros .buscar input { width: 100%; }
+	.dias { color: var(--mal); font-size: 13px; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+	<aside class="lateral">
+		<div class="marca">
+			<div class="p">P</div>
+			<div class="nombre">GIAPP</div>
+		</div>
+		<nav class="menu">
+			<a href="P20-cuadro-mando.html">Cuadro de mando</a>
+			<div class="grupo">Aparcamiento</div>
+			<a href="P23-plano-plazas.html">Plano de plazas</a>
+			<a href="#">Tarifas y promociones</a>
+			<div class="grupo">Abonados</div>
+			<a href="#">Clientes</a>
+			<a href="P28-alta-contrato.html">Contratos</a>
+			<div class="grupo">Cobros</div>
+			<a class="activo" href="P30-impagados.html">Recibos</a>
+			<a href="#">Lecturas de contador</a>
+			<div class="grupo">Accesos</div>
+			<a href="#">Validar acceso</a>
+		</nav>
+		<div class="sesion">
+			Andrés Moreno
+			<a href="P01-login.html">Cerrar sesión</a>
+		</div>
+	</aside>
+
+	<main class="principal">
+
+		<div class="cabecera">
+			<div>
+				<div class="sitio"><a href="P20-cuadro-mando.html">Parking Juan Bosco</a> · Cobros</div>
+				<h1>Recibos</h1>
+			</div>
+		</div>
+
+		<div class="rejilla tres" style="margin-bottom:22px">
+			<div class="metrica alerta">
+				<span class="cifra">1.045,80 €</span>
+				<div class="rotulo">Impagado</div>
+				<div class="nota">3 recibos de 3 abonados</div>
+			</div>
+			<div class="metrica">
+				<span class="cifra">366,60 €</span>
+				<div class="rotulo">Pendiente de vencer</div>
+				<div class="nota">1 recibo</div>
+			</div>
+			<div class="metrica">
+				<span class="cifra">2.640,00 €</span>
+				<div class="rotulo">Cobrado en octubre</div>
+				<div class="nota">12 recibos</div>
+			</div>
+		</div>
+
+		<div class="filtros">
+			<div class="campo">
+				<label for="estado">Estado</label>
+				<select id="estado">
+					<option>Todos</option>
+					<option selected>Impagados</option>
+					<option>Pendientes</option>
+					<option>Pagados</option>
+				</select>
+			</div>
+			<div class="campo">
+				<label for="desde">Vencidos desde</label>
+				<input type="text" id="desde" value="01/01/2026">
+			</div>
+			<div class="campo buscar">
+				<label for="busca">Abonado</label>
+				<input type="search" id="busca" placeholder="Nombre o matrícula">
+			</div>
+		</div>
+
+		<div class="tarjeta">
+			<table>
+				<thead>
+					<tr>
+						<th>Abonado</th>
+						<th>Plaza</th>
+						<th>Periodo</th>
+						<th>Vencimiento</th>
+						<th class="num">Importe</th>
+						<th>Estado</th>
+						<th class="num">Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							Javier Pozo Alarcón
+							<div class="dias">62 días de retraso</div>
+						</td>
+						<td>07</td>
+						<td>Jul – dic 2026</td>
+						<td>5 ago 2026</td>
+						<td class="num">366,60 €</td>
+						<td><span class="estado impagado">Impagado</span></td>
+						<td class="num"><a href="#">Registrar pago</a></td>
+					</tr>
+					<tr>
+						<td>
+							Nuria Bermejo Gil
+							<div class="dias">31 días de retraso</div>
+						</td>
+						<td>23</td>
+						<td>Sep – nov 2026</td>
+						<td>5 sep 2026</td>
+						<td class="num">174,00 €</td>
+						<td><span class="estado impagado">Impagado</span></td>
+						<td class="num"><a href="#">Registrar pago</a></td>
+					</tr>
+					<tr>
+						<td>
+							Tomás Herrera Liébana
+							<div class="dias">1 día de retraso</div>
+						</td>
+						<td>31</td>
+						<td>Oct 2026 – mar 2027</td>
+						<td>5 oct 2026</td>
+						<td class="num">505,20 €</td>
+						<td><span class="estado impagado">Impagado</span></td>
+						<td class="num"><a href="#">Registrar pago</a></td>
+					</tr>
+					<tr>
+						<td>Marta Ruiz Delgado</td>
+						<td>12</td>
+						<td>Jul – dic 2026</td>
+						<td>5 jul 2026</td>
+						<td class="num">366,60 €</td>
+						<td><span class="estado pendiente">Pendiente</span></td>
+						<td class="num"><a href="#">Registrar pago</a></td>
+					</tr>
+					<tr>
+						<td>Lucía Cano Prieto</td>
+						<td>05</td>
+						<td>Octubre 2026</td>
+						<td>5 oct 2026</td>
+						<td class="num">55,00 €</td>
+						<td><span class="estado pagado">Pagado</span></td>
+						<td class="num"><a href="#">Ver recibo</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p style="color:var(--gris);font-size:14px">
+			Los abonados con recibos impagados no pueden abrir la barrera con su código QR.
+		</p>
+
+	</main>
+
+</div>
+
+</body>
+</html>

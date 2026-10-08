@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P23 Plano de plazas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.plantas { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+
+	.plantas a {
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 600;
+		font-size: 16px;
+		padding: 7px 17px;
+		border: 1px solid var(--borde);
+		border-radius: 4px;
+		background: var(--blanco);
+		color: var(--azul);
+		text-decoration: none;
+	}
+
+	.plantas a.activo { background: var(--azul); border-color: var(--azul); color: var(--linea); }
+
+	.pasillo {
+		grid-column: 1 / -1;
+		height: 34px;
+		border-top: 2px dashed rgba(242, 244, 240, 0.4);
+		border-bottom: 2px dashed rgba(242, 244, 240, 0.4);
+		margin: 7px 0;
+	}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+	<symbol id="coche" viewBox="0 0 60 100">
+		<rect x="3" y="24" width="6" height="16" rx="3" fill="var(--rueda)"/>
+		<rect x="51" y="24" width="6" height="16" rx="3" fill="var(--rueda)"/>
+		<rect x="3" y="64" width="6" height="16" rx="3" fill="var(--rueda)"/>
+		<rect x="51" y="64" width="6" height="16" rx="3" fill="var(--rueda)"/>
+		<rect x="4" y="31" width="7" height="5" rx="2" fill="currentColor"/>
+		<rect x="49" y="31" width="7" height="5" rx="2" fill="currentColor"/>
+		<rect x="9" y="6" width="42" height="88" rx="13" fill="currentColor"/>
+		<path d="M17 33 L43 33 L40 21 Q30 17 20 21 Z" fill="var(--cristal)"/>
+		<path d="M18 57 L42 57 L39 69 Q30 73 21 69 Z" fill="var(--cristal)"/>
+	</symbol>
+	<symbol id="moto" viewBox="0 0 34 48">
+		<rect x="13" y="3" width="8" height="13" rx="4" fill="var(--rueda)"/>
+		<rect x="13" y="33" width="8" height="13" rx="4" fill="var(--rueda)"/>
+		<rect x="3" y="12" width="28" height="6" rx="3" fill="currentColor"/>
+		<path d="M17 13 L23 23 L23 35 Q17 39 11 35 L11 23 Z" fill="currentColor"/>
+		<rect x="11" y="25" width="12" height="9" rx="4" fill="var(--cristal)"/>
+	</symbol>
+</svg>
+
+<div class="app">
+
+	<aside class="lateral">
+		<div class="marca">
+			<div class="p">P</div>
+			<div class="nombre">GIAPP</div>
+		</div>
+		<nav class="menu">
+			<a href="P20-cuadro-mando.html">Cuadro de mando</a>
+			<div class="grupo">Aparcamiento</div>
+			<a class="activo" href="P23-plano-plazas.html">Plano de plazas</a>
+			<a href="#">Tarifas y promociones</a>
+			<div class="grupo">Abonados</div>
+			<a href="#">Clientes</a>
+			<a href="P28-alta-contrato.html">Contratos</a>
+			<div class="grupo">Cobros</div>
+			<a href="P30-impagados.html">Recibos</a>
+			<a href="#">Lecturas de contador</a>
+			<div class="grupo">Accesos</div>
+			<a href="#">Validar acceso</a>
+		</nav>
+		<div class="sesion">
+			Andrés Moreno
+			<a href="P01-login.html">Cerrar sesión</a>
+		</div>
+	</aside>
+
+	<main class="principal">
+
+		<div class="cabecera">
+			<div>
+				<div class="sitio"><a href="P20-cuadro-mando.html">Parking Juan Bosco</a> · Planta -1</div>
+				<h1>Plano de plazas</h1>
+			</div>
+			<a class="boton secundario" href="#">Crear plazas en lote</a>
+		</div>
+
+		<div class="plantas">
+			<a class="activo" href="#">Planta -1</a>
+			<a href="#">Planta -2</a>
+			<a href="#">Planta -3</a>
+		</div>
+
+		<p style="margin:0 0 16px;color:var(--gris)">
+			20 de 24 plazas ocupadas · 1 fuera de servicio · pulsa una plaza para abrir su ficha
+		</p>
+
+		<div class="planta">
+
+			<a class="plaza" href="#"><span class="num">01</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">02</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza libre" href="#"><span class="num">03</span></a>
+			<a class="plaza media" href="#">
+				<span class="num">04</span>
+				<div class="mitad"><svg class="v negro" viewBox="0 0 34 48"><use href="#moto"/></svg></div>
+				<div class="mitad"><svg class="v gris" viewBox="0 0 34 48"><use href="#moto"/></svg></div>
+			</a>
+			<a class="plaza" href="#"><span class="num">05</span><svg class="v negro" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">06</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">07</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza libre" href="#"><span class="num">08</span></a>
+
+			<div class="pasillo"></div>
+
+			<a class="plaza" href="#"><span class="num">09</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">10</span><svg class="v azul" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">11</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">12</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">13</span><svg class="v negro" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza media" href="#">
+				<span class="num">14</span>
+				<div class="mitad"><svg class="v blanco" viewBox="0 0 34 48"><use href="#moto"/></svg></div>
+				<div class="mitad libre"></div>
+			</a>
+			<a class="plaza" href="#"><span class="num">15</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza baja" href="#"><span class="num">16</span></a>
+
+			<div class="pasillo"></div>
+
+			<a class="plaza" href="#"><span class="num">17</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">18</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza libre" href="#"><span class="num">19</span></a>
+			<a class="plaza" href="#"><span class="num">20</span><svg class="v negro" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">21</span><svg class="v amarillo" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza media" href="#">
+				<span class="num">22</span>
+				<div class="mitad"><svg class="v amarillo" viewBox="0 0 34 48"><use href="#moto"/></svg></div>
+				<div class="mitad"><svg class="v negro" viewBox="0 0 34 48"><use href="#moto"/></svg></div>
+			</a>
+			<a class="plaza" href="#"><span class="num">23</span><svg class="v blanco" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+			<a class="plaza" href="#"><span class="num">24</span><svg class="v gris" viewBox="0 0 60 100"><use href="#coche"/></svg></a>
+
+		</div>
+
+		<div class="leyenda">
+			<span><i class="muestra libre"></i>Libre</span>
+			<span><i class="muestra"></i>Ocupada</span>
+			<span><i class="muestra compartida"></i>Compartida por dos motos</span>
+			<span><i class="muestra fuera"></i>Fuera de servicio</span>
+		</div>
+
+		<div class="tarjeta" style="margin-top:26px">
+			<h3>Plaza 14</h3>
+			<p style="margin:0 0 14px;color:var(--gris);font-size:14px">
+				Capacidad de 2 medias plazas, no admite coches por el acceso.
+				Tiene una moto, así que queda media plaza libre.
+			</p>
+			<a class="boton" href="P28-alta-contrato.html">Asignar la media plaza libre</a>
+		</div>
+
+	</main>
+
+</div>
+
+</body>
+</html>

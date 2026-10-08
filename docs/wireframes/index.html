@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · Prototipo de interfaz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.hoja { max-width: 860px; margin: 0 auto; padding: 44px 24px 70px; }
+
+	.titular { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+
+	.titular .p {
+		width: 46px;
+		height: 46px;
+		border-radius: 6px;
+		background: var(--azul);
+		color: var(--linea);
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 700;
+		font-size: 34px;
+		line-height: 46px;
+		text-align: center;
+		flex: none;
+	}
+
+	.intro { color: var(--gris); max-width: 62ch; line-height: 1.6; margin: 0 0 34px; }
+
+	.grupo-pantallas { margin-bottom: 30px; }
+	.grupo-pantallas h2 { margin-bottom: 4px; }
+	.grupo-pantallas .quien { color: var(--gris); font-size: 14px; margin: 0 0 14px; }
+
+	.enlaces { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+
+	.enlaces a {
+		display: block;
+		background: var(--blanco);
+		border: 1px solid var(--borde);
+		border-radius: 5px;
+		padding: 13px 15px;
+		text-decoration: none;
+		color: var(--tinta);
+	}
+
+	.enlaces a:hover { border-color: var(--azul); background: var(--azul-suave); }
+
+	.enlaces .ref {
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 600;
+		font-size: 14px;
+		color: var(--azul);
+	}
+
+	.enlaces .que { font-size: 15px; margin-top: 1px; }
+	.enlaces .rf { font-size: 13px; color: var(--gris); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hoja">
+
+	<div class="titular">
+		<div class="p">P</div>
+		<h1>GIAPP · Prototipo de interfaz</h1>
+	</div>
+
+	<p class="intro">
+		Prototipo navegable de las pantallas principales. Las pantallas están enlazadas entre sí,
+		así que se puede recorrer el flujo real haciendo clic. Proyecto Intermodular de DAM, Andrés Moreno.
+	</p>
+
+	<section class="grupo-pantallas">
+		<h2>Acceso</h2>
+		<p class="quien">Común a los dos roles</p>
+		<div class="enlaces">
+			<a href="P01-login.html">
+				<div class="ref">P01</div>
+				<div class="que">Acceso</div>
+				<div class="rf">RF-02</div>
+			</a>
+		</div>
+	</section>
+
+	<section class="grupo-pantallas">
+		<h2>Área del abonado</h2>
+		<p class="quien">Pensada para móvil. Conviene verla con el navegador estrecho.</p>
+		<div class="enlaces">
+			<a href="P10-inicio-cliente.html">
+				<div class="ref">P10</div>
+				<div class="que">Inicio</div>
+				<div class="rf">RF-27, RF-36</div>
+			</a>
+			<a href="P13-recibo-cliente.html">
+				<div class="ref">P13</div>
+				<div class="que">Detalle del recibo</div>
+				<div class="rf">RF-47, RF-50, RF-51</div>
+			</a>
+			<a href="P15-qr-cliente.html">
+				<div class="ref">P15</div>
+				<div class="que">Mi código de acceso</div>
+				<div class="rf">RF-37, RF-38</div>
+			</a>
+		</div>
+	</section>
+
+	<section class="grupo-pantallas">
+		<h2>Panel del gestor</h2>
+		<p class="quien">Pensada para escritorio</p>
+		<div class="enlaces">
+			<a href="P20-cuadro-mando.html">
+				<div class="ref">P20</div>
+				<div class="que">Cuadro de mando</div>
+				<div class="rf">RF-16, RF-34, RF-35</div>
+			</a>
+			<a href="P23-plano-plazas.html">
+				<div class="ref">P23</div>
+				<div class="que">Plano de plazas</div>
+				<div class="rf">RF-13, RF-15, RF-16</div>
+			</a>
+			<a href="P28-alta-contrato.html">
+				<div class="ref">P28</div>
+				<div class="que">Nuevo contrato</div>
+				<div class="rf">RF-20 a RF-23, RF-30, RF-43</div>
+			</a>
+			<a href="P30-impagados.html">
+				<div class="ref">P30</div>
+				<div class="que">Recibos e impagados</div>
+				<div class="rf">RF-32, RF-34, RF-35</div>
+			</a>
+		</div>
+	</section>
+
+</div>
+
+</body>
+</html>

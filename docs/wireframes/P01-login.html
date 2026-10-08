@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P01 Acceso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.pantalla {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+		min-height: 100vh;
+	}
+
+	.panel {
+		background: var(--azul);
+		color: var(--linea);
+		padding: 48px 44px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 40px;
+	}
+
+	.panel .marca { padding: 0; }
+	.panel .marca .p { width: 46px; height: 46px; font-size: 34px; line-height: 46px; border-radius: 6px; }
+	.panel .marca .nombre { font-size: 30px; }
+	.panel .marca .sub { font-size: 14px; color: rgba(242, 244, 240, 0.72); margin-top: 3px; }
+
+	.dibujo { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; }
+	.dibujo svg { width: 100%; max-width: 340px; height: auto; }
+
+	.pie { font-size: 14px; line-height: 1.55; color: rgba(242, 244, 240, 0.72); max-width: 34ch; margin: 0; }
+	.pie strong { color: var(--linea); font-weight: 600; }
+
+	.acceso { display: flex; align-items: center; justify-content: center; padding: 48px 40px; }
+	.formulario { width: 100%; max-width: 384px; }
+
+	.formulario h1 { font-size: 40px; margin-bottom: 10px; }
+	.entradilla { font-size: 16px; color: var(--gris); margin: 0 0 32px; line-height: 1.5; }
+
+	.olvido { display: block; font-size: 14px; margin-top: 9px; text-decoration: none; }
+	.olvido:hover { text-decoration: underline; }
+
+	.nota-pie {
+		margin-top: 28px;
+		padding-top: 20px;
+		border-top: 1px solid var(--borde);
+		font-size: 14px;
+		line-height: 1.55;
+		color: var(--gris);
+	}
+
+	@media (max-width: 860px) {
+		.pantalla { grid-template-columns: 1fr; }
+		.panel { padding: 24px; gap: 0; flex-direction: row; align-items: center; }
+		.dibujo, .pie { display: none; }
+		.acceso { align-items: flex-start; padding: 40px 24px; }
+		.formulario h1 { font-size: 34px; }
+	}
+</style>
+</head>
+<body>
+
+<div class="pantalla">
+
+	<section class="panel">
+		<div class="marca">
+			<div class="p">P</div>
+			<div>
+				<div class="nombre">GIAPP</div>
+				<div class="sub">Gestión integral de aparcamiento</div>
+			</div>
+		</div>
+
+		<div class="dibujo">
+			<svg viewBox="0 0 360 470" role="img" aria-label="Plano esquemático de una planta con ocho plazas, tres ocupadas y una compartida por dos motos">
+				<g>
+					<rect x="20" y="30" width="78" height="140" fill="#ffffff" fill-opacity="0.14"/>
+					<rect x="176" y="30" width="78" height="140" fill="#ffffff" fill-opacity="0.14"/>
+					<rect x="254" y="30" width="78" height="140" fill="#f5c542" fill-opacity="0.16"/>
+					<line x1="254" y1="100" x2="332" y2="100" stroke="#f5c542" stroke-width="3" stroke-dasharray="7 5"/>
+
+					<path d="M20 170 V30 H332 V170" fill="none" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="98" y1="30" x2="98" y2="170" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="176" y1="30" x2="176" y2="170" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="254" y1="30" x2="254" y2="170" stroke="#f2f4f0" stroke-width="3"/>
+
+					<g font-family="Barlow Semi Condensed, sans-serif" font-size="21" font-weight="600" text-anchor="middle">
+						<text x="59" y="155" fill="#f2f4f0" fill-opacity="0.55">01</text>
+						<text x="137" y="155" fill="#f2f4f0">02</text>
+						<text x="215" y="155" fill="#f2f4f0" fill-opacity="0.55">03</text>
+						<text x="293" y="155" fill="#f5c542">04</text>
+					</g>
+				</g>
+
+				<line x1="20" y1="235" x2="332" y2="235" stroke="#f2f4f0" stroke-width="2" stroke-dasharray="18 16" stroke-opacity="0.45"/>
+
+				<g>
+					<rect x="98" y="300" width="78" height="140" fill="#ffffff" fill-opacity="0.14"/>
+
+					<path d="M20 300 V440 H332 V300" fill="none" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="98" y1="300" x2="98" y2="440" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="176" y1="300" x2="176" y2="440" stroke="#f2f4f0" stroke-width="3"/>
+					<line x1="254" y1="300" x2="254" y2="440" stroke="#f2f4f0" stroke-width="3"/>
+
+					<g font-family="Barlow Semi Condensed, sans-serif" font-size="21" font-weight="600" text-anchor="middle">
+						<text x="59" y="330" fill="#f2f4f0">05</text>
+						<text x="137" y="330" fill="#f2f4f0" fill-opacity="0.55">06</text>
+						<text x="215" y="330" fill="#f2f4f0">07</text>
+						<text x="293" y="330" fill="#f2f4f0">08</text>
+					</g>
+				</g>
+			</svg>
+		</div>
+
+		<p class="pie">
+			Cada plaza admite un coche o dos motos. La <strong>04</strong> está compartida.
+		</p>
+	</section>
+
+	<main class="acceso">
+		<form class="formulario" action="P20-cuadro-mando.html" method="get">
+			<h1>Acceso</h1>
+			<p class="entradilla">Entra con la cuenta que te facilitó tu aparcamiento.</p>
+
+			<div class="campo">
+				<label for="correo">Correo electrónico</label>
+				<input type="email" id="correo" name="correo" autocomplete="email" placeholder="nombre@correo.es">
+			</div>
+
+			<div class="campo">
+				<label for="clave">Contraseña</label>
+				<input type="password" id="clave" name="clave" autocomplete="current-password" placeholder="••••••••">
+				<a class="olvido" href="#">He olvidado mi contraseña</a>
+			</div>
+
+			<button class="boton ancho" type="submit" style="margin-top:12px">Entrar</button>
+
+			<p class="nota-pie">
+				¿Aún no tienes cuenta? Las crea el gestor del aparcamiento al firmar el contrato.
+			</p>
+		</form>
+	</main>
+
+</div>
+
+</body>
+</html>

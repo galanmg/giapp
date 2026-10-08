@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIAPP · P13 Detalle del recibo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+	.periodo {
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 600;
+		font-size: 25px;
+		margin-bottom: 3px;
+	}
+
+	.desglose > div {
+		display: flex;
+		justify-content: space-between;
+		gap: 14px;
+		padding: 11px 0;
+		border-bottom: 1px solid var(--borde);
+	}
+
+	.desglose .concepto { max-width: 62%; }
+	.desglose .matiz { font-size: 13px; color: var(--gris); margin-top: 2px; line-height: 1.45; }
+	.desglose .cantidad { font-variant-numeric: tabular-nums; font-weight: 500; white-space: nowrap; }
+	.desglose .abono { color: var(--ok); }
+
+	.total {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 14px;
+		padding-top: 15px;
+		margin-top: 4px;
+		border-top: 2px solid var(--tinta);
+	}
+
+	.total .cifra {
+		font-family: 'Barlow Semi Condensed', sans-serif;
+		font-weight: 600;
+		font-size: 30px;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.explica {
+		background: var(--azul-suave);
+		border-radius: 6px;
+		padding: 14px 16px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: var(--azul-hondo);
+	}
+</style>
+</head>
+<body>
+
+<div class="movil">
+
+	<header class="barra">
+		<a class="volver" href="P10-inicio-cliente.html" aria-label="Volver">←</a>
+		<h1>Detalle del recibo</h1>
+	</header>
+
+	<main class="cuerpo">
+
+		<div class="tarjeta">
+			<div class="periodo">Julio a diciembre de 2026</div>
+			<div style="font-size:14px;color:var(--gris);margin-bottom:18px">
+				6 meses · emitido el 1 de julio · vence el 5 de julio
+				<span class="estado pendiente" style="margin-left:6px">Pendiente</span>
+			</div>
+
+			<div class="desglose">
+				<div>
+					<div class="concepto">
+						Alquiler de plaza
+						<div class="matiz">6 meses × 55,00 €</div>
+					</div>
+					<div class="cantidad">330,00 €</div>
+				</div>
+				<div>
+					<div class="concepto">
+						Provisión eléctrica
+						<div class="matiz">Estimación para el periodo, se ajusta en el siguiente recibo</div>
+					</div>
+					<div class="cantidad">48,00 €</div>
+				</div>
+				<div>
+					<div class="concepto">
+						Regularización del periodo anterior
+						<div class="matiz">Marzo a junio: consumiste 20,60 € y se te cobraron 32,00 €</div>
+					</div>
+					<div class="cantidad abono">−11,40 €</div>
+				</div>
+			</div>
+
+			<div class="total">
+				<div>Total</div>
+				<div class="cifra">366,60 €</div>
+			</div>
+		</div>
+
+		<div class="explica">
+			La luz se cobra por adelantado con una estimación. Cuando se lee el contador,
+			la diferencia se te devuelve o se te suma en el recibo siguiente.
+		</div>
+
+		<div class="tarjeta" style="margin-top:18px">
+			<h3>Consumo del enchufe E-12A</h3>
+			<dl class="lista-datos">
+				<div><dt>Lectura al inicio</dt><dd>1.284 kWh</dd></div>
+				<div><dt>Lectura al cierre</dt><dd>1.387 kWh</dd></div>
+				<div><dt>Consumido</dt><dd>103 kWh</dd></div>
+				<div><dt>Precio del kWh</dt><dd>0,20 €</dd></div>
+			</dl>
+		</div>
+
+	</main>
+
+	<nav class="pestanas">
+		<a href="P10-inicio-cliente.html">Inicio</a>
+		<a class="activo" href="P13-recibo-cliente.html">Recibos</a>
+		<a href="P15-qr-cliente.html">Acceso</a>
+		<a href="P01-login.html">Salir</a>
+	</nav>
+
+</div>
+
+</body>
+</html>
