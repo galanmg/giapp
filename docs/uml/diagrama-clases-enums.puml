@@ -1,0 +1,47 @@
+@startuml diagrama-clases-enums
+' GIAPP - Enumerados del modelo
+' Autor: Andres Moreno
+
+hide circle
+skinparam classAttributeIconSize 0
+
+enum Rol {
+  GESTOR
+  CLIENTE
+}
+
+enum TipoVehiculo {
+  COCHE
+  MOTO
+}
+
+enum EstadoPlaza {
+  DISPONIBLE
+  FUERA_DE_SERVICIO
+}
+
+enum Periodicidad {
+  MENSUAL
+  TRIMESTRAL
+  SEMESTRAL
+  ANUAL
+}
+
+enum EstadoContrato {
+  ACTIVO
+  FINALIZADO
+  RESCINDIDO
+}
+
+enum EstadoRecibo {
+  PENDIENTE
+  PAGADO
+  IMPAGADO
+}
+
+enum TipoAcceso {
+  ENTRADA
+  SALIDA
+}
+
+@enduml

@@ -1,0 +1,139 @@
+@startuml diagrama-clases
+' GIAPP - Diagrama de clases / modelo conceptual
+' Autor: Andres Moreno
+
+hide circle
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class Usuario {
+  - id : Long
+  - nombre : String
+  - apellidos : String
+  - email : String
+  - passwordHash : String
+  - telefono : String
+  - rol : Rol
+  - activo : boolean
+}
+
+class Vehiculo {
+  - id : Long
+  - matricula : String
+  - marca : String
+  - modelo : String
+  - tipo : TipoVehiculo
+}
+
+class Aparcamiento {
+  - id : Long
+  - nombre : String
+  - direccion : String
+  - ciudad : String
+}
+
+class Planta {
+  - id : Long
+  - identificador : String
+  - nivel : int
+}
+
+class Plaza {
+  - id : Long
+  - numero : String
+  - capacidad : int
+  - admiteCoche : boolean
+  - estado : EstadoPlaza
+  + capacidadOcupada() : int
+  + admite(v : Vehiculo) : boolean
+}
+
+class Enchufe #C8C8C8 {
+  - id : Long
+  - identificador : String
+  - activo : boolean
+}
+
+class LecturaContador #C8C8C8 {
+  - id : Long
+  - fecha : LocalDate
+  - kwhAcumulado : BigDecimal
+}
+
+class TarifaAlquiler {
+  - id : Long
+  - tipoVehiculo : TipoVehiculo
+  - precioMensual : BigDecimal
+  - vigenteDesde : LocalDate
+}
+
+class TarifaElectrica #C8C8C8 {
+  - id : Long
+  - precioKwh : BigDecimal
+  - vigenteDesde : LocalDate
+}
+
+class Promocion {
+  - id : Long
+  - codigo : String
+  - porcentajeDescuento : int
+  - fechaCaducidad : LocalDate
+  - activa : boolean
+}
+
+class Contrato {
+  - id : Long
+  - fechaInicio : LocalDate
+  - fechaFin : LocalDate
+  - periodicidad : Periodicidad
+  - precioMensual : BigDecimal
+  - provisionElectrica : BigDecimal
+  - estado : EstadoContrato
+  + ocupacion() : int
+}
+
+class Recibo {
+  - id : Long
+  - periodoInicio : LocalDate
+  - periodoFin : LocalDate
+  - numeroMeses : int
+  - importeAlquiler : BigDecimal
+  - provisionElectrica : BigDecimal
+  - regularizacion : BigDecimal
+  - importeTotal : BigDecimal
+  - fechaEmision : LocalDate
+  - fechaVencimiento : LocalDate
+  - fechaPago : LocalDate
+  - estado : EstadoRecibo
+}
+
+class RegistroAcceso {
+  - id : Long
+  - fechaHora : LocalDateTime
+  - tipo : TipoAcceso
+}
+
+Usuario "1" -- "0..*" Aparcamiento : gestiona >
+Usuario "1" -- "0..*" Vehiculo : posee >
+Usuario "1" -- "0..*" Contrato : titular de >
+
+Aparcamiento "1" *-- "1..*" Planta
+Aparcamiento "1" *-- "1..*" TarifaAlquiler
+Aparcamiento "1" *-- "0..*" TarifaElectrica
+Aparcamiento "1" *-- "0..*" Promocion
+Planta "1" *-- "1..*" Plaza
+Plaza "1" *-- "0..*" Enchufe
+Enchufe "1" *-- "0..*" LecturaContador
+
+Contrato "0..*" -- "1" Plaza : ocupa >
+Contrato "0..*" -- "1" Vehiculo
+Contrato "0..*" -- "0..1" Enchufe : usa >
+Contrato "0..*" -- "0..1" Promocion
+Contrato "1" *-- "0..*" Recibo
+Contrato "1" -- "0..*" RegistroAcceso
+
+legend bottom
+  En gris: modulo de suministro electrico (ampliacion opcional)
+endlegend
+
+@enduml

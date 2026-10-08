@@ -1,0 +1,64 @@
+@startuml flujo-navegacion-gestor
+' GIAPP - Flujo de navegacion del gestor
+' Autor: Andres Moreno
+
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+}
+
+[*] --> P01
+
+state "P01 - Login" as P01
+state "P20 - Cuadro de mando" as P20
+
+state "P21 - Aparcamientos" as P21
+state "P22 - Plantas" as P22
+state "P23 - Plano de plazas" as P23
+state "P24 - Ficha de plaza" as P24
+
+state "P25 - Clientes" as P25
+state "P26 - Ficha de cliente" as P26
+
+state "P27 - Contratos" as P27
+state "P28 - Alta de contrato" as P28
+state "P29 - Detalle de contrato" as P29
+
+state "P30 - Recibos e impagados" as P30
+state "P31 - Detalle de recibo" as P31
+
+state "P32 - Tarifas y promociones" as P32
+state "P33 - Lecturas de contador" as P33
+state "P34 - Validar acceso" as P34
+state "P35 - Historico de accesos" as P35
+
+P01 --> P20 : credenciales correctas\ny rol gestor
+P01 --> P01 : credenciales\nincorrectas
+
+P20 --> P21
+P20 --> P25
+P20 --> P27
+P20 --> P30
+P20 --> P32
+P20 --> P33
+P20 --> P34
+
+P21 --> P22 : selecciona aparcamiento
+P22 --> P23 : selecciona planta
+P23 --> P24 : selecciona o crea plaza
+
+P25 --> P26 : selecciona cliente
+P26 --> P28 : nuevo contrato
+
+P27 --> P29 : selecciona contrato
+P27 --> P28 : nuevo contrato
+P28 --> P29 : contrato creado
+P29 --> P31 : selecciona recibo
+
+P30 --> P31 : selecciona recibo
+
+P34 --> P35 : acceso registrado
+
+P20 --> [*] : cerrar sesion
+
+@enduml

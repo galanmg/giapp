@@ -1,0 +1,40 @@
+@startuml flujo-navegacion-cliente
+' GIAPP - Flujo de navegacion del cliente
+' Autor: Andres Moreno
+
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+}
+
+[*] --> P01
+
+state "P01 - Login" as P01
+state "P10 - Inicio" as P10
+state "P11 - Mi contrato" as P11
+state "P12 - Mis recibos" as P12
+state "P13 - Detalle de recibo" as P13
+state "P14 - Mi consumo" as P14
+state "P15 - Mi QR" as P15
+state "P16 - Mi perfil" as P16
+
+P01 --> P10 : credenciales correctas\ny rol cliente
+P01 --> P01 : credenciales\nincorrectas
+
+P10 --> P11
+P10 --> P12
+P10 --> P14
+P10 --> P15
+P10 --> P16
+
+P12 --> P13 : selecciona un recibo
+P13 --> P12 : volver
+
+P11 --> P10 : volver
+P14 --> P10 : volver
+P15 --> P10 : volver
+P16 --> P10 : volver
+
+P10 --> [*] : cerrar sesion
+
+@enduml
