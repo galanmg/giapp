@@ -3,9 +3,10 @@
 Documento de la fase de análisis. Entrega 2 del Proyecto Intermodular.
 Autor: Andrés Moreno.
 
-La numeración es permanente: si se elimina un requisito se deja el hueco, porque
-los diagramas de `docs/uml/` y los wireframes de `docs/wireframes/` los
-referencian.
+La numeración es permanente: si se elimina un requisito se deja el hueco, y los
+requisitos incorporados en revisiones posteriores conservan el siguiente número
+libre aunque queden fuera de secuencia dentro de su tabla. Los diagramas de
+`docs/uml/` y los wireframes de `docs/wireframes/` los referencian por número.
 
 ---
 
@@ -62,6 +63,7 @@ referencian.
 | RF-25 | El gestor podrá finalizar o rescindir un contrato indicando la fecha efectiva de baja. |
 | RF-26 | El gestor podrá consultar todos los contratos y filtrarlos por aparcamiento, cliente o estado. |
 | RF-27 | El cliente podrá consultar los datos de su contrato: plaza asignada, vehículo, fecha de inicio y periodicidad. |
+| RF-52 | El cliente podrá solicitar la baja de su contrato, quedando la solicitud pendiente de que el gestor la confirme. |
 
 ### Facturación y recibos
 
@@ -76,6 +78,7 @@ referencian.
 | RF-34 | El gestor podrá consultar los recibos impagados de sus aparcamientos. |
 | RF-35 | El gestor podrá consultar los ingresos de sus aparcamientos en un rango de fechas. |
 | RF-36 | El cliente podrá consultar el histórico de sus recibos y el estado de cada uno. |
+| RF-53 | El sistema enviará por correo electrónico un resguardo al cliente y al gestor cada vez que se registre el pago de un recibo. |
 
 ### Control de accesos
 
@@ -133,18 +136,24 @@ referencian.
 ### Funcionalidades mínimas viables
 
 1. Autenticación con JWT y dos roles, con los endpoints de la API protegidos
-   según el rol.
+   según el rol. *(RF-01 a RF-06)*
 2. Gestión completa del inventario: aparcamientos, plantas y plazas con
    capacidad en medias plazas, más el alta de clientes y sus vehículos.
+   *(RF-07 a RF-19)*
 3. Contratos de alquiler: asignación de plaza con control de capacidad, cambio
-   de plaza, finalización y consulta.
+   de plaza, finalización y consulta. *(RF-20 a RF-27)*
 4. Facturación periódica: generación automática de recibos alineados al
    calendario, prorrateo del primer periodo, y control de pagos e impagados.
+   *(RF-28 a RF-36)*
 
 ### Funcionalidades opcionales
 
+Por orden de prioridad, si el tiempo lo permite:
+
 1. Control de accesos por QR, validando que el contrato está activo y al
-   corriente de pago.
+   corriente de pago. *(RF-37 a RF-41)*
 2. Gestión del suministro eléctrico: enchufes, lecturas de contador y
-   regularización del consumo en el recibo siguiente.
-3. Cuadro de mando con gráficas de ocupación, ingresos y morosidad.
+   regularización del consumo en el recibo siguiente. *(RF-42 a RF-51)*
+3. Solicitud de baja del contrato por parte del cliente. *(RF-52)*
+4. Envío de resguardos de pago por correo electrónico. *(RF-53)*
+5. Cuadro de mando con gráficas de ocupación, ingresos y morosidad.
