@@ -102,7 +102,7 @@ campo. Nunca añadas un campo `estaOcupada` a `Plaza`.
 
 | Capa | Tecnología |
 |---|---|
-| Backend | Spring Boot 3, Java 21, Maven |
+| Backend | Spring Boot 4, Java 21, Maven |
 | Persistencia | Spring Data JPA / Hibernate sobre MySQL 8 |
 | Seguridad | Spring Security con JWT (jjwt) |
 | Documentación de la API | springdoc-openapi / Swagger UI |
@@ -118,7 +118,7 @@ giapp/
 ├── backend/           Spring Boot
 ├── frontend/          Flutter
 └── docs/
-    ├── requisitos.md  los 51 RF y 17 RNF
+    ├── requisitos.md  los 53 RF y 17 RNF
     ├── uml/           diagramas PlantUML con sus PNG
     └── wireframes/    prototipo HTML navegable
 ```
@@ -146,6 +146,9 @@ entre la API y el cliente.
 - **Renumerar requisitos.** Si se elimina uno, se deja el hueco. Los diagramas y
   los wireframes referencian los números.
 - **Ampliar el alcance sin preguntar.** Ver la sección siguiente.
+- **Tocar `.env` ni `application-local.properties`.** Son locales y no están
+  versionados. Si hace falta una credencial nueva, se añade a las plantillas
+  `.ejemplo` y se documenta en el README.
 
 ## Alcance comprometido
 
