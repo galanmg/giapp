@@ -65,6 +65,49 @@ giapp/
     ├── uml/           casos de uso, clases y flujo de navegación
     └── wireframes/    prototipo de interfaz navegable
 ```
+## Puesta en marcha
+
+### Requisitos previos
+
+- JDK 21
+- Docker Desktop
+
+El proyecto incluye el wrapper de Maven (`mvnw`), así que no hace falta tener
+Maven instalado.
+
+### Configuración
+
+Las credenciales no se versionan. Copia las dos plantillas y rellénalas:
+
+```
+copy backend\.env.ejemplo backend\.env
+copy backend\src\main\resources\application-local.properties.ejemplo backend\src\main\resources\application-local.properties
+```
+
+Las credenciales de los dos archivos deben coincidir entre sí.
+
+### Arrancar
+
+Levanta la base de datos:
+
+```
+cd backend
+docker compose up -d
+```
+
+Espera a que MySQL termine de inicializarse. Para comprobarlo:
+
+```
+docker compose logs mysql
+```
+
+Cuando aparezca `ready for connections`, arranca la aplicación:
+
+```
+mvnw spring-boot:run
+```
+
+La API queda disponible en `http://localhost:8080`.
 
 ## Documentación
 
