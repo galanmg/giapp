@@ -131,7 +131,7 @@ entre la API y el cliente.
 
 - Nombres de clases, variables, métodos y comentarios **en español**.
 - `camelCase` para variables y métodos, `PascalCase` para clases.
-- Indentación con tabuladores.
+- Indentación con 4 espacios (se usará IntelliJ).
 - Los enumerados se persisten con `@Enumerated(EnumType.STRING)`.
   **Nunca `ORDINAL`**: guarda la posición, y al insertar un valor nuevo en medio
   del enum todos los registros antiguos pasan a significar otra cosa.
