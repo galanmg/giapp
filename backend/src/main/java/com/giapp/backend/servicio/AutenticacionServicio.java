@@ -1,5 +1,7 @@
 package com.giapp.backend.servicio;
 
+import com.giapp.backend.dto.LoginPeticion;
+import com.giapp.backend.dto.LoginRespuesta;
 import com.giapp.backend.dto.RegistroPeticion;
 import com.giapp.backend.dto.UsuarioRespuesta;
 import com.giapp.backend.modelo.Usuario;
@@ -16,11 +18,14 @@ public class AutenticacionServicio {
 
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
+    private final JwtServicio jwtServicio;
 
     public AutenticacionServicio(UsuarioRepositorio usuarioRepositorio,
-                                 PasswordEncoder passwordEncoder) {
+                                 PasswordEncoder passwordEncoder,
+                                 JwtServicio jwtServicio) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
+        this.jwtServicio = jwtServicio;
     }
 
     @Transactional
@@ -47,5 +52,29 @@ public class AutenticacionServicio {
                 guardado.getApellidos(),
                 guardado.getEmail(),
                 guardado.getRol().name());
+    }
+
+    @Transactional(readOnly = true)
+    public LoginRespuesta login(LoginPeticion peticion) {
+
+        Usuario usuario = usuarioRepositorio.findByEmail(peticion.email())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Email o contraseña incorrectos"));
+
+        if (!passwordEncoder.matches(peticion.password(), usuario.getPasswordHash())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Email o contraseña incorrectos");
+        }
+
+        if (!usuario.isActivo()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "La cuenta está desactivada");
+        }
+
+        return new LoginRespuesta(
+                jwtServicio.generarToken(usuario),
+                usuario.getEmail(),
+                usuario.getNombre(),
+                usuario.getRol().name());
     }
 }

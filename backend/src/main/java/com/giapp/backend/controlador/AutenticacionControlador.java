@@ -1,5 +1,7 @@
 package com.giapp.backend.controlador;
 
+import com.giapp.backend.dto.LoginPeticion;
+import com.giapp.backend.dto.LoginRespuesta;
 import com.giapp.backend.dto.RegistroPeticion;
 import com.giapp.backend.dto.UsuarioRespuesta;
 import com.giapp.backend.servicio.AutenticacionServicio;
@@ -25,5 +27,10 @@ public class AutenticacionControlador {
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioRespuesta registrar(@Valid @RequestBody RegistroPeticion peticion) {
         return autenticacionServicio.registrar(peticion);
+    }
+
+    @PostMapping("/login")
+    public LoginRespuesta login(@Valid @RequestBody LoginPeticion peticion) {
+        return autenticacionServicio.login(peticion);
     }
 }

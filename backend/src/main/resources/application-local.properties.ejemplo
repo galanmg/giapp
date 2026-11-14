@@ -1,2 +1,6 @@
 spring.datasource.username=giapp
 spring.datasource.password=cambiame
+
+# Clave de firma de los JWT. Generar una aleatoria de al menos 32 caracteres
+giapp.jwt.secreto=GZezEerooOdsyWkfG59+knSvLokNeqtYlRjShhig2hHg509cvpbGebJSf7RccVQX
+giapp.jwt.expiracion-ms=86400000
