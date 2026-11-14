@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/aparcamientos/**", "/api/plazas/**").authenticated()
                         .requestMatchers("/api/aparcamientos/**", "/api/plazas/**").hasRole("GESTOR")
+                        .requestMatchers("/api/contratos/**").hasRole("GESTOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFiltro, UsernamePasswordAuthenticationFilter.class);

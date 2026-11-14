@@ -1,6 +1,7 @@
 package com.giapp.backend.modelo;
 
 import com.giapp.backend.modelo.enums.EstadoPlaza;
+import com.giapp.backend.modelo.enums.TipoVehiculo;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,5 +49,19 @@ public class Plaza {
         this.admiteCoche = admiteCoche;
         this.estado = EstadoPlaza.DISPONIBLE;
         this.planta = planta;
+    }
+
+    // Comprueba si la plaza puede acoger un vehiculo de ese tipo sabiendo cuantas medias plazas tiene ya ocupadas
+    public boolean admite(TipoVehiculo tipo, int mediasOcupadas) {
+
+        if (estado != EstadoPlaza.DISPONIBLE) {
+            return false;
+        }
+
+        if (tipo == TipoVehiculo.COCHE && !admiteCoche) {
+            return false;
+        }
+
+        return mediasOcupadas + tipo.getMediasPlazas() <= capacidad;
     }
 }
