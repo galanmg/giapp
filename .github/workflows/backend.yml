@@ -7,9 +7,25 @@ on:
     branches: [main]
 
 jobs:
-  compilar:
-    name: Compilar el backend
+  verificar:
+    name: Compilar y pasar las pruebas
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: raiz
+          MYSQL_DATABASE: giapp
+          MYSQL_USER: giapp
+          MYSQL_PASSWORD: giapp
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     steps:
       - name: Descargar el código
@@ -22,6 +38,11 @@ jobs:
           distribution: temurin
           cache: maven
 
-      - name: Compilar
+      - name: Compilar y pasar las pruebas
         working-directory: backend
-        run: ./mvnw -B clean package -DskipTests
+        env:
+          SPRING_DATASOURCE_USERNAME: giapp
+          SPRING_DATASOURCE_PASSWORD: giapp
+          GIAPP_JWT_SECRETO: clave-de-pruebas-solo-para-integracion-continua-nunca-en-uso-real
+          GIAPP_JWT_EXPIRACION_MS: 86400000
+        run: ./mvnw -B clean verify
