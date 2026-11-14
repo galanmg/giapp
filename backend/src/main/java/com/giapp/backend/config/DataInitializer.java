@@ -12,6 +12,7 @@ import com.giapp.backend.repositorio.TarifaAlquilerRepositorio;
 import com.giapp.backend.repositorio.UsuarioRepositorio;
 import com.giapp.backend.repositorio.VehiculoRepositorio;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ public class DataInitializer implements CommandLineRunner {
     private final VehiculoRepositorio vehiculoRepositorio;
     private final TarifaAlquilerRepositorio tarifaAlquilerRepositorio;
     private final ContratoRepositorio contratoRepositorio;
+    private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UsuarioRepositorio usuarioRepositorio,
                            AparcamientoRepositorio aparcamientoRepositorio,
@@ -34,7 +36,8 @@ public class DataInitializer implements CommandLineRunner {
                            PlazaRepositorio plazaRepositorio,
                            VehiculoRepositorio vehiculoRepositorio,
                            TarifaAlquilerRepositorio tarifaAlquilerRepositorio,
-                           ContratoRepositorio contratoRepositorio) {
+                           ContratoRepositorio contratoRepositorio,
+                           PasswordEncoder passwordEncoder) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.aparcamientoRepositorio = aparcamientoRepositorio;
         this.plantaRepositorio = plantaRepositorio;
@@ -42,6 +45,7 @@ public class DataInitializer implements CommandLineRunner {
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.tarifaAlquilerRepositorio = tarifaAlquilerRepositorio;
         this.contratoRepositorio = contratoRepositorio;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -55,15 +59,16 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("Cargando datos de prueba...");
 
-        // Usuarios. La contraseña se cifrará cuando esté Spring Security
+        String passwordCifrada = passwordEncoder.encode("giapp1234");
+
         Usuario gestor = usuarioRepositorio.save(
-                new Usuario("Andrés", "Moreno", "gestor@giapp.com", "pendiente-de-cifrar", "600111222", Rol.GESTOR));
+                new Usuario("Andrés", "Moreno", "gestor@giapp.com", passwordCifrada, "600111222", Rol.GESTOR));
 
         Usuario laura = usuarioRepositorio.save(
-                new Usuario("Laura", "Ortega", "laura@giapp.com", "pendiente-de-cifrar", "600333444", Rol.CLIENTE));
+                new Usuario("Laura", "Ortega", "laura@giapp.com", passwordCifrada, "600333444", Rol.CLIENTE));
 
         Usuario miguel = usuarioRepositorio.save(
-                new Usuario("Miguel", "Ruiz", "miguel@giapp.com", "pendiente-de-cifrar", "600555666", Rol.CLIENTE));
+                new Usuario("Miguel", "Ruiz", "miguel@giapp.com", passwordCifrada, "600555666", Rol.CLIENTE));
 
         // Aparcamiento
         Aparcamiento juanBosco = aparcamientoRepositorio.save(
