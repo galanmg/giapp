@@ -1,0 +1,57 @@
+@startuml diagrama-arquitectura
+' GIAPP - Arquitectura de la aplicacion
+' Autor: Andres Moreno
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+actor "Gestor" as gestor
+actor "Cliente" as cliente
+
+package "Frontend - Flutter 3 (web y Android)" {
+  component "Pantallas\nlogin / plazas" as pantallas
+  component "Modelos\nPlaza" as modelos
+  component "ApiServicio\npaquete http + token JWT" as apiservicio
+}
+
+package "Backend - Spring Boot 4 / Java 21" {
+  component "JwtFiltro\nSpring Security 7" as filtro
+  component "Controladores REST\n/api/auth, /api/aparcamientos,\n/api/plazas, /api/contratos" as controladores
+  component "DTO\npeticiones y respuestas" as dto
+  component "Servicios\nreglas de negocio" as servicios
+  component "Repositorios\nSpring Data JPA" as repositorios
+  component "Modelo\nentidades JPA" as modelo
+}
+
+database "MySQL 8.4\ncontenedor Docker" as bd
+
+gestor --> pantallas
+cliente --> pantallas
+
+pantallas --> apiservicio
+apiservicio ..> modelos : construye
+
+apiservicio --> filtro : HTTP / JSON\nAuthorization: Bearer <JWT>
+
+filtro --> controladores : si el token es valido
+controladores ..> dto
+controladores --> servicios
+servicios --> repositorios
+servicios ..> modelo
+repositorios --> bd : JDBC / Hibernate
+
+note right of filtro
+  Valida la firma del token,
+  comprueba que el usuario sigue activo
+  y carga su rol en el contexto
+end note
+
+note right of servicios
+  Aqui viven las reglas:
+  capacidad en medias plazas,
+  periodos de facturacion,
+  validacion de roles
+end note
+
+@enduml

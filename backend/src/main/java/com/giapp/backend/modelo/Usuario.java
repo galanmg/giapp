@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Usuario",
+@Table(name = "usuario",
         uniqueConstraints = @UniqueConstraint(name = "uk_usuario_email", columnNames = "email"))
 public class Usuario {
     @Id
