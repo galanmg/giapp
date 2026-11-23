@@ -4,6 +4,7 @@ import com.giapp.backend.modelo.enums.Periodicidad;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,6 +30,10 @@ public record ContratoPeticion(
         Long plazaId,
 
         @NotNull(message = "Hay que indicar el vehículo")
-        Long vehiculoId
+        Long vehiculoId,
+
+        // Opcional (RF-23): el precio se guarda con el descuento ya aplicado
+        @Size(max = 20, message = "El código de promoción no puede superar los 20 caracteres")
+        String codigoPromocion
 ) {
 }

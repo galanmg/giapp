@@ -43,6 +43,7 @@ public class ContratoServicio {
     private final AparcamientoServicio aparcamientoServicio;
     private final UsuarioActualServicio usuarioActualServicio;
     private final ReciboServicio reciboServicio;
+    private final PromocionServicio promocionServicio;
 
     public ContratoServicio(ContratoRepositorio contratoRepositorio,
                             VehiculoRepositorio vehiculoRepositorio,
@@ -52,7 +53,8 @@ public class ContratoServicio {
                             PlazaServicio plazaServicio,
                             AparcamientoServicio aparcamientoServicio,
                             UsuarioActualServicio usuarioActualServicio,
-                            ReciboServicio reciboServicio) {
+                            ReciboServicio reciboServicio,
+                            PromocionServicio promocionServicio) {
         this.contratoRepositorio = contratoRepositorio;
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
@@ -62,6 +64,7 @@ public class ContratoServicio {
         this.aparcamientoServicio = aparcamientoServicio;
         this.usuarioActualServicio = usuarioActualServicio;
         this.reciboServicio = reciboServicio;
+        this.promocionServicio = promocionServicio;
     }
 
     // ---- Gestor ----
@@ -93,6 +96,13 @@ public class ContratoServicio {
         BigDecimal precioMensual = peticion.precioMensual() != null
                 ? peticion.precioMensual()
                 : precioDeTarifa(aparcamiento, vehiculo.getTipo(), peticion.fechaInicio());
+
+        // RF-23: el descuento se aplica sobre el precio pactado o, si no hay, sobre la tarifa.
+        // El contrato no guarda la promoción, solo el precio resultante.
+        if (peticion.codigoPromocion() != null && !peticion.codigoPromocion().isBlank()) {
+            precioMensual = promocionServicio.aplicar(
+                    peticion.codigoPromocion(), aparcamiento, peticion.fechaInicio(), precioMensual);
+        }
 
         Contrato contrato = contratoRepositorio.save(new Contrato(
                 peticion.fechaInicio(),
