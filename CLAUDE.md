@@ -154,7 +154,7 @@ Catorce entidades en el diseño. El diagrama está en
 | `Usuario` | Implementada | Una sola tabla con un campo `rol` (GESTOR o CLIENTE), no herencia |
 | `Vehiculo` | Implementada | Tipo COCHE o MOTO. Matrícula única por propietario |
 | `Aparcamiento` | Implementada | Un gestor puede tener varios |
-| `ClienteAparcamiento` | Pendiente | Vínculo cliente-aparcamiento, con `fechaAlta` y `activo` |
+| `ClienteAparcamiento` | Implementada | Vínculo cliente-aparcamiento, con `fechaAlta` y `activo` |
 | `Planta` | Implementada | Compuesta en Aparcamiento |
 | `Plaza` | Implementada | `capacidad` y `admiteCoche`; ver medias plazas |
 | `TarifaAlquiler` | Implementada | Por tipo de vehículo, con `vigenteDesde` |
