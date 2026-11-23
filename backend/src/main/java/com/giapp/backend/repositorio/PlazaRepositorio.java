@@ -9,4 +9,6 @@ import java.util.List;
 public interface PlazaRepositorio extends JpaRepository<Plaza, Long> {
 
     List<Plaza> findByPlanta(Planta planta);
+
+    boolean existsByPlanta(Planta planta);
 }
