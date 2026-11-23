@@ -1,5 +1,6 @@
 package com.giapp.backend.servicio;
 
+import com.giapp.backend.dto.GeneracionRespuesta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,8 +10,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 /**
- * Tarea automática de facturación: cada día a las 6:00, hora de Madrid, genera
- * los recibos pendientes de todos los contratos activos (RF-28).
+ * Tarea automática de facturación: cada día a las 6:00, hora de Madrid, marca
+ * como impagados los recibos vencidos (RF-33) y después genera los recibos
+ * pendientes de todos los contratos activos (RF-28).
  *
  * La zona horaria va explícita para que no dependa de la del servidor.
  */
@@ -29,8 +31,9 @@ public class FacturacionProgramada {
     @Scheduled(cron = "0 0 6 * * *", zone = ZONA)
     public void ejecutar() {
         LocalDate hoy = LocalDate.now(ZoneId.of(ZONA));
-        int creados = reciboServicio.generarPendientes(hoy);
+        GeneracionRespuesta resultado = reciboServicio.procesarTodos(hoy);
 
-        log.info("Facturación del {}: {} recibos creados", hoy, creados);
+        log.info("Facturación del {}: {} recibos marcados como impagados, {} recibos creados",
+                hoy, resultado.recibosMarcadosImpagados(), resultado.recibosCreados());
     }
 }
