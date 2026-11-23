@@ -39,6 +39,11 @@ public interface ContratoRepositorio extends JpaRepository<Contrato, Long> {
 
     List<Contrato> findByTitularOrderByFechaInicioDesc(Usuario titular);
 
+    // Para generar recibos: todos los contratos en un estado, o solo los de un gestor
+    List<Contrato> findByEstado(EstadoContrato estado);
+
+    List<Contrato> findByEstadoAndPlazaPlantaAparcamientoGestor(EstadoContrato estado, Usuario gestor);
+
     // ¿Tiene el vehículo contratos en ese estado, en cualquier aparcamiento?
     boolean existsByVehiculoAndEstado(Vehiculo vehiculo, EstadoContrato estado);
 

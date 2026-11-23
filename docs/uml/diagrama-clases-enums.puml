@@ -39,6 +39,11 @@ enum EstadoRecibo {
   IMPAGADO
 }
 
+enum FormaPago {
+  EFECTIVO
+  TRANSFERENCIA_BIZUM
+}
+
 enum TipoAcceso {
   ENTRADA
   SALIDA

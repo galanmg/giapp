@@ -110,6 +110,7 @@ class Recibo {
   - fechaEmision : LocalDate
   - fechaVencimiento : LocalDate
   - fechaPago : LocalDate
+  - formaPago : FormaPago
   - estado : EstadoRecibo
 }
 

@@ -42,6 +42,7 @@ public class ContratoServicio {
     private final PlazaServicio plazaServicio;
     private final AparcamientoServicio aparcamientoServicio;
     private final UsuarioActualServicio usuarioActualServicio;
+    private final ReciboServicio reciboServicio;
 
     public ContratoServicio(ContratoRepositorio contratoRepositorio,
                             VehiculoRepositorio vehiculoRepositorio,
@@ -50,7 +51,8 @@ public class ContratoServicio {
                             TarifaAlquilerRepositorio tarifaAlquilerRepositorio,
                             PlazaServicio plazaServicio,
                             AparcamientoServicio aparcamientoServicio,
-                            UsuarioActualServicio usuarioActualServicio) {
+                            UsuarioActualServicio usuarioActualServicio,
+                            ReciboServicio reciboServicio) {
         this.contratoRepositorio = contratoRepositorio;
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
@@ -59,6 +61,7 @@ public class ContratoServicio {
         this.plazaServicio = plazaServicio;
         this.aparcamientoServicio = aparcamientoServicio;
         this.usuarioActualServicio = usuarioActualServicio;
+        this.reciboServicio = reciboServicio;
     }
 
     // ---- Gestor ----
@@ -91,15 +94,19 @@ public class ContratoServicio {
                 ? peticion.precioMensual()
                 : precioDeTarifa(aparcamiento, vehiculo.getTipo(), peticion.fechaInicio());
 
-        Contrato contrato = new Contrato(
+        Contrato contrato = contratoRepositorio.save(new Contrato(
                 peticion.fechaInicio(),
                 peticion.periodicidad(),
                 precioMensual,
                 titular,
                 plaza,
-                vehiculo);
+                vehiculo));
 
-        return aRespuesta(contratoRepositorio.save(contrato));
+        // El primer recibo se emite al crear el contrato, en la misma transacción:
+        // si fallara, tampoco se crearía el contrato
+        reciboServicio.emitirPrimero(contrato);
+
+        return aRespuesta(contrato);
     }
 
     // Contratos de mis aparcamientos (RF-26). Filtros opcionales.
