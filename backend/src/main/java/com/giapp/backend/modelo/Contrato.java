@@ -2,6 +2,7 @@ package com.giapp.backend.modelo;
 
 import com.giapp.backend.modelo.enums.EstadoContrato;
 import com.giapp.backend.modelo.enums.Periodicidad;
+import com.giapp.backend.servicio.CalculadoraPeriodos;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,5 +67,10 @@ public class Contrato {
     // La ocupacion se mide en medias plazas: un coche ocupa 2 y una moto 1
     public int ocupacion() {
         return vehiculo.getTipo().getMediasPlazas();
+    }
+
+    // Se calcula, no se guarda: fechaInicio es la entrada real del cliente
+    public LocalDate inicioFacturacion() {
+        return CalculadoraPeriodos.inicioFacturacion(fechaInicio);
     }
 }
