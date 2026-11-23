@@ -5,6 +5,7 @@ import com.giapp.backend.modelo.enums.Periodicidad;
 import com.giapp.backend.modelo.enums.Rol;
 import com.giapp.backend.modelo.enums.TipoVehiculo;
 import com.giapp.backend.repositorio.AparcamientoRepositorio;
+import com.giapp.backend.repositorio.ClienteAparcamientoRepositorio;
 import com.giapp.backend.repositorio.ContratoRepositorio;
 import com.giapp.backend.repositorio.PlantaRepositorio;
 import com.giapp.backend.repositorio.PlazaRepositorio;
@@ -28,6 +29,7 @@ public class DataInitializer implements CommandLineRunner {
     private final VehiculoRepositorio vehiculoRepositorio;
     private final TarifaAlquilerRepositorio tarifaAlquilerRepositorio;
     private final ContratoRepositorio contratoRepositorio;
+    private final ClienteAparcamientoRepositorio clienteAparcamientoRepositorio;
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UsuarioRepositorio usuarioRepositorio,
@@ -37,6 +39,7 @@ public class DataInitializer implements CommandLineRunner {
                            VehiculoRepositorio vehiculoRepositorio,
                            TarifaAlquilerRepositorio tarifaAlquilerRepositorio,
                            ContratoRepositorio contratoRepositorio,
+                           ClienteAparcamientoRepositorio clienteAparcamientoRepositorio,
                            PasswordEncoder passwordEncoder) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.aparcamientoRepositorio = aparcamientoRepositorio;
@@ -45,6 +48,7 @@ public class DataInitializer implements CommandLineRunner {
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.tarifaAlquilerRepositorio = tarifaAlquilerRepositorio;
         this.contratoRepositorio = contratoRepositorio;
+        this.clienteAparcamientoRepositorio = clienteAparcamientoRepositorio;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -73,6 +77,12 @@ public class DataInitializer implements CommandLineRunner {
         // Aparcamiento
         Aparcamiento juanBosco = aparcamientoRepositorio.save(
                 new Aparcamiento("Juan Bosco", "Calle Mayor 10", "Ciudad Real", gestor));
+
+        // Laura y Miguel son clientes de Juan Bosco desde el día en que empiezan sus contratos
+        clienteAparcamientoRepositorio.save(
+                new ClienteAparcamiento(laura, juanBosco, LocalDate.of(2026, 3, 1)));
+        clienteAparcamientoRepositorio.save(
+                new ClienteAparcamiento(miguel, juanBosco, LocalDate.of(2026, 4, 1)));
 
         // Plantas
         Planta sotano = plantaRepositorio.save(new Planta("Sótano 1", -1, juanBosco));
