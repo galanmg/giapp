@@ -1,16 +1,13 @@
 package com.giapp.backend.controlador;
 
-import com.giapp.backend.dto.ClientePeticion;
-import com.giapp.backend.dto.RegistroPeticion;
+import com.giapp.backend.dto.ClienteAltaPeticion;
 import com.giapp.backend.dto.UsuarioRespuesta;
 import com.giapp.backend.servicio.ClienteServicio;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,33 +28,23 @@ public class ClienteControlador {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioRespuesta crear(@Valid @RequestBody RegistroPeticion peticion) {
+    public UsuarioRespuesta crear(@Valid @RequestBody ClienteAltaPeticion peticion) {
         return clienteServicio.crear(peticion);
     }
 
     @GetMapping
-    public List<UsuarioRespuesta> listar(@RequestParam(required = false) String texto) {
-        return clienteServicio.listar(texto);
+    public List<UsuarioRespuesta> listar(@RequestParam(required = false) String texto,
+                                         @RequestParam(required = false) Long aparcamientoId) {
+        return clienteServicio.listar(texto, aparcamientoId);
+    }
+
+    @GetMapping("/buscar")
+    public UsuarioRespuesta buscarPorEmail(@RequestParam String email) {
+        return clienteServicio.buscarPorEmail(email);
     }
 
     @GetMapping("/{id}")
     public UsuarioRespuesta buscarPorId(@PathVariable Long id) {
         return clienteServicio.buscarPorId(id);
-    }
-
-    @PutMapping("/{id}")
-    public UsuarioRespuesta actualizar(@PathVariable Long id,
-                                       @Valid @RequestBody ClientePeticion peticion) {
-        return clienteServicio.actualizar(id, peticion);
-    }
-
-    @PatchMapping("/{id}/desactivar")
-    public UsuarioRespuesta desactivar(@PathVariable Long id) {
-        return clienteServicio.cambiarActivo(id, false);
-    }
-
-    @PatchMapping("/{id}/activar")
-    public UsuarioRespuesta activar(@PathVariable Long id) {
-        return clienteServicio.cambiarActivo(id, true);
     }
 }

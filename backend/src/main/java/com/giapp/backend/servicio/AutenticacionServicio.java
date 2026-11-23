@@ -30,9 +30,9 @@ public class AutenticacionServicio {
         this.clienteServicio = clienteServicio;
     }
 
-    // El registro público es un alta de cliente: siempre con rol CLIENTE
+    // Registro público (RF-54): siempre con rol CLIENTE
     public UsuarioRespuesta registrar(RegistroPeticion peticion) {
-        return clienteServicio.crear(peticion);
+        return clienteServicio.registrar(peticion);
     }
 
     @Transactional(readOnly = true)

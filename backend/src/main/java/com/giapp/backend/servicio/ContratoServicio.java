@@ -2,11 +2,13 @@ package com.giapp.backend.servicio;
 
 import com.giapp.backend.dto.ContratoPeticion;
 import com.giapp.backend.dto.ContratoRespuesta;
+import com.giapp.backend.modelo.Aparcamiento;
 import com.giapp.backend.modelo.Contrato;
 import com.giapp.backend.modelo.Plaza;
 import com.giapp.backend.modelo.Usuario;
 import com.giapp.backend.modelo.Vehiculo;
 import com.giapp.backend.modelo.enums.EstadoContrato;
+import com.giapp.backend.repositorio.ClienteAparcamientoRepositorio;
 import com.giapp.backend.repositorio.ContratoRepositorio;
 import com.giapp.backend.repositorio.PlazaRepositorio;
 import com.giapp.backend.repositorio.UsuarioRepositorio;
@@ -23,15 +25,18 @@ public class ContratoServicio {
     private final PlazaRepositorio plazaRepositorio;
     private final VehiculoRepositorio vehiculoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
+    private final ClienteAparcamientoRepositorio clienteAparcamientoRepositorio;
 
     public ContratoServicio(ContratoRepositorio contratoRepositorio,
                             PlazaRepositorio plazaRepositorio,
                             VehiculoRepositorio vehiculoRepositorio,
-                            UsuarioRepositorio usuarioRepositorio) {
+                            UsuarioRepositorio usuarioRepositorio,
+                            ClienteAparcamientoRepositorio clienteAparcamientoRepositorio) {
         this.contratoRepositorio = contratoRepositorio;
         this.plazaRepositorio = plazaRepositorio;
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
+        this.clienteAparcamientoRepositorio = clienteAparcamientoRepositorio;
     }
 
     @Transactional
@@ -44,6 +49,16 @@ public class ContratoServicio {
         if (!vehiculo.getPropietario().getId().equals(titular.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "El vehículo no pertenece al titular del contrato");
+        }
+
+        // El titular tiene que ser cliente activo del aparcamiento de la plaza
+        Aparcamiento aparcamiento = plaza.getPlanta().getAparcamiento();
+
+        if (!clienteAparcamientoRepositorio.existsByClienteAndAparcamientoAndActivoTrue(
+                titular, aparcamiento)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "El titular no está dado de alta como cliente en el aparcamiento "
+                            + aparcamiento.getNombre());
         }
 
         int mediasOcupadas = mediasPlazasOcupadas(plaza);

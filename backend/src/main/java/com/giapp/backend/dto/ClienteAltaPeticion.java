@@ -2,10 +2,11 @@ package com.giapp.backend.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-// Modificación de un cliente por el gestor. La contraseña no se cambia desde aquí.
-public record ClientePeticion(
+// Alta de un cliente sin cuenta por parte del gestor (RF-01)
+public record ClienteAltaPeticion(
 
         @NotBlank(message = "El nombre es obligatorio")
         @Size(max = 100, message = "El nombre no puede superar los 100 caracteres")
@@ -20,7 +21,14 @@ public record ClientePeticion(
         @Size(max = 150, message = "El email no puede superar los 150 caracteres")
         String email,
 
+        @NotBlank(message = "La contraseña es obligatoria")
+        @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+        String password,
+
         @Size(max = 20, message = "El teléfono no puede superar los 20 caracteres")
-        String telefono
+        String telefono,
+
+        @NotNull(message = "Hay que indicar el aparcamiento")
+        Long aparcamientoId
 ) {
 }

@@ -64,10 +64,9 @@ public class AparcamientoServicio {
         aparcamientoRepositorio.delete(buscarPropio(id));
     }
 
-    // Métodos internos
-
-    // 404 si no existe; 403 si existe pero lo administra otro gestor
-    private Aparcamiento buscarPropio(Long id) {
+    // 404 si no existe; 403 si existe pero lo administra otro gestor.
+    // Público para que lo usen otros servicios: devuelve la entidad, no un DTO.
+    public Aparcamiento buscarPropio(Long id) {
         Aparcamiento aparcamiento = aparcamientoRepositorio.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "No existe el aparcamiento con id " + id));
@@ -81,6 +80,8 @@ public class AparcamientoServicio {
 
         return aparcamiento;
     }
+
+    // Métodos internos
 
     private AparcamientoRespuesta aRespuesta(Aparcamiento aparcamiento) {
         Usuario gestor = aparcamiento.getGestor();
