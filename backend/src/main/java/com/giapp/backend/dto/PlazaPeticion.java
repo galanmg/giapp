@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 
 public record PlazaPeticion(
 
-        @NotBlank(message = "El numero de la plaza es obligatorio")
+        @NotBlank(message = "El número de la plaza es obligatorio")
         @Size(max = 10,message = "El número de plaza no puede pasar de 10 caracteres")
         String numero,
 
