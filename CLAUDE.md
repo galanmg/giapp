@@ -160,7 +160,7 @@ Catorce entidades en el diseño. El diagrama está en
 | `TarifaAlquiler` | Implementada | Por tipo de vehículo, con `vigenteDesde` |
 | `Contrato` | Implementada | El núcleo: cliente, plaza, vehículo, periodicidad |
 | `Recibo` | Implementada | Sin los campos eléctricos del diagrama; con `formaPago` (RF-32) |
-| `Promocion` | Pendiente | Código, descuento y caducidad |
+| `Promocion` | Implementada | De un aparcamiento; código único en su aparcamiento, descuento y caducidad |
 | `RegistroAcceso` | Fuera de alcance | Ampliación opcional (QR) |
 | `Enchufe` | Fuera de alcance | Ampliación opcional (eléctrico) |
 | `LecturaContador` | Fuera de alcance | Ampliación opcional (eléctrico) |

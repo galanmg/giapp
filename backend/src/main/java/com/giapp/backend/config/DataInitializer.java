@@ -6,6 +6,7 @@ import com.giapp.backend.modelo.Contrato;
 import com.giapp.backend.modelo.Periodo;
 import com.giapp.backend.modelo.Planta;
 import com.giapp.backend.modelo.Plaza;
+import com.giapp.backend.modelo.Promocion;
 import com.giapp.backend.modelo.Recibo;
 import com.giapp.backend.modelo.TarifaAlquiler;
 import com.giapp.backend.modelo.Usuario;
@@ -20,6 +21,7 @@ import com.giapp.backend.repositorio.ClienteAparcamientoRepositorio;
 import com.giapp.backend.repositorio.ContratoRepositorio;
 import com.giapp.backend.repositorio.PlantaRepositorio;
 import com.giapp.backend.repositorio.PlazaRepositorio;
+import com.giapp.backend.repositorio.PromocionRepositorio;
 import com.giapp.backend.repositorio.ReciboRepositorio;
 import com.giapp.backend.repositorio.TarifaAlquilerRepositorio;
 import com.giapp.backend.repositorio.UsuarioRepositorio;
@@ -44,6 +46,7 @@ public class DataInitializer implements CommandLineRunner {
     private final ContratoRepositorio contratoRepositorio;
     private final ClienteAparcamientoRepositorio clienteAparcamientoRepositorio;
     private final ReciboRepositorio reciboRepositorio;
+    private final PromocionRepositorio promocionRepositorio;
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(UsuarioRepositorio usuarioRepositorio,
@@ -55,6 +58,7 @@ public class DataInitializer implements CommandLineRunner {
                            ContratoRepositorio contratoRepositorio,
                            ClienteAparcamientoRepositorio clienteAparcamientoRepositorio,
                            ReciboRepositorio reciboRepositorio,
+                           PromocionRepositorio promocionRepositorio,
                            PasswordEncoder passwordEncoder) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.aparcamientoRepositorio = aparcamientoRepositorio;
@@ -65,6 +69,7 @@ public class DataInitializer implements CommandLineRunner {
         this.contratoRepositorio = contratoRepositorio;
         this.clienteAparcamientoRepositorio = clienteAparcamientoRepositorio;
         this.reciboRepositorio = reciboRepositorio;
+        this.promocionRepositorio = promocionRepositorio;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -129,6 +134,10 @@ public class DataInitializer implements CommandLineRunner {
 
         tarifaAlquilerRepositorio.save(new TarifaAlquiler(
                 TipoVehiculo.MOTO, new BigDecimal("25.00"), LocalDate.of(2026, 1, 1), juanBosco));
+
+        // Promoción para la demostración de RF-23: un 10 % hasta fin de año
+        promocionRepositorio.save(new Promocion(
+                "BIENVENIDA10", 10, LocalDate.of(2026, 12, 31), juanBosco));
 
         // Contratos activos
         // S1-01 queda llena: un coche ocupa las 2 medias plazas. Pago semestral.
