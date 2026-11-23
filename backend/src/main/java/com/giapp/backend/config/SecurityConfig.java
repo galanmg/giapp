@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/clientes/**").hasRole("GESTOR")
                         .requestMatchers("/api/aparcamientos/**").hasRole("GESTOR")
                         .requestMatchers("/api/plantas/**").hasRole("GESTOR")
+                        .requestMatchers("/api/tarifas/**").hasRole("GESTOR")
                         .requestMatchers("/api/plazas/**").hasRole("GESTOR")
                         .requestMatchers("/api/contratos/**").hasRole("GESTOR")
                         .anyRequest().authenticated()
