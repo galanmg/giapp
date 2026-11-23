@@ -70,7 +70,7 @@ public class SecurityConfig {
         CorsConfiguration configuracion = new CorsConfiguration();
 
         configuracion.setAllowedOriginPatterns(List.of("http://localhost:*", "http://127.0.0.1:*"));
-        configuracion.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuracion.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuracion.setAllowedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource fuente = new UrlBasedCorsConfigurationSource();
