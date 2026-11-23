@@ -9,7 +9,7 @@ actor "Cliente" as cliente
 
 rectangle "GIAPP" {
   usecase "Consultar mi contrato" as UC10
-  usecase "Consultar mis vehiculos" as UC11
+  usecase "Gestionar mis vehiculos" as UC11
   usecase "Consultar mis recibos" as UC12
   usecase "Ver desglose\ndel recibo" as UC13
   usecase "Consultar mi\nconsumo electrico" as UC14

@@ -9,11 +9,13 @@ actor "Usuario" as usuario <<abstracto>>
 actor "Cliente" as cliente
 actor "Gestor" as gestor
 actor "Planificador" as tiempo
+actor "Visitante" as visitante
 
 rectangle "GIAPP" {
   usecase "Iniciar sesion" as UC01
   usecase "Cerrar sesion" as UC02
   usecase "Gestionar perfil" as UC03
+  usecase "Registrarse\ncomo cliente" as UC04
 
   usecase "Area del cliente" as M1
   usecase "Gestion del\naparcamiento" as M2
@@ -26,6 +28,9 @@ gestor --|> usuario
 usuario --> UC01
 usuario --> UC02
 usuario --> UC03
+
+' RF-54: quien aun no tiene cuenta
+visitante --> UC04
 
 cliente --> M1
 gestor --> M2

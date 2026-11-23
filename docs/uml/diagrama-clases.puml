@@ -50,8 +50,8 @@ class Plaza {
   - capacidad : int
   - admiteCoche : boolean
   - estado : EstadoPlaza
-  + capacidadOcupada() : int
-  + admite(v : Vehiculo) : boolean
+  + admite(tipo : TipoVehiculo, mediasOcupadas : int) : boolean
+  + situacion(mediasOcupadas : int) : String
 }
 
 class Enchufe #C8C8C8 {
@@ -85,6 +85,8 @@ class Promocion {
   - porcentajeDescuento : int
   - fechaCaducidad : LocalDate
   - activa : boolean
+  + esValidaEn(fecha : LocalDate) : boolean
+  + aplicarA(precio : BigDecimal) : BigDecimal
 }
 
 class Contrato {
@@ -96,6 +98,7 @@ class Contrato {
   - provisionElectrica : BigDecimal
   - estado : EstadoContrato
   + ocupacion() : int
+  + inicioFacturacion() : LocalDate
 }
 
 class Recibo {
@@ -112,6 +115,7 @@ class Recibo {
   - fechaPago : LocalDate
   - formaPago : FormaPago
   - estado : EstadoRecibo
+  + {static} calcularImporte(precioMensual : BigDecimal, meses : int) : BigDecimal
 }
 
 class RegistroAcceso {

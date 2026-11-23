@@ -9,6 +9,7 @@ actor "Gestor" as gestor
 
 rectangle "GIAPP" {
   usecase "Gestionar clientes" as UC20
+  usecase "Buscar por email y\nvincular cliente" as UC29
   usecase "Gestionar vehiculos" as UC21
   usecase "Gestionar aparcamientos" as UC22
   usecase "Gestionar plantas" as UC23
@@ -40,6 +41,9 @@ gestor --> UC30
 gestor --> UC34
 gestor --> UC35
 gestor --> UC36
+
+' RF-55: un usuario ya registrado pasa a ser cliente de un aparcamiento
+UC29 ..> UC20 : <<extend>>
 
 UC30 ..> UC31 : <<include>>
 UC32 ..> UC30 : <<extend>>
