@@ -11,6 +11,8 @@ public record ContratoRespuesta(
         BigDecimal precioMensual,
         String estado,
         String titular,
+        String aparcamiento,
+        String planta,
         String plaza,
         String vehiculo,
         int ocupacion

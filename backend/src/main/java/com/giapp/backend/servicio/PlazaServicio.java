@@ -147,10 +147,9 @@ public class PlazaServicio {
         return aRespuesta(plaza, ocupadas);
     }
 
-    // Métodos internos
-
-    // 404 si no existe; 403 si es de un aparcamiento de otro gestor
-    private Plaza buscarPropia(Long id) {
+    // 404 si no existe; 403 si es de un aparcamiento de otro gestor.
+    // Público para que lo use el servicio de contratos.
+    public Plaza buscarPropia(Long id) {
         Plaza plaza = plazaRepositorio.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "No existe la plaza con id " + id));
@@ -159,6 +158,14 @@ public class PlazaServicio {
 
         return plaza;
     }
+
+    // Medias plazas ocupadas por los contratos activos de una plaza.
+    // Público para que el servicio de contratos no duplique el cálculo.
+    public int mediasOcupadas(Plaza plaza) {
+        return mediasOcupadas(contratosActivos(plaza));
+    }
+
+    // Métodos internos
 
     private List<Contrato> contratosActivos(Plaza plaza) {
         return contratoRepositorio.findByPlazaAndEstado(plaza, EstadoContrato.ACTIVO);
