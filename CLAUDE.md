@@ -43,7 +43,12 @@ Al terminar cada tarea, y antes de pasar a la siguiente:
    defensa, así que tiene que poder entenderlo sin leer el código.
 3. Haz `git add -A`, revisa con `git status` que solo entra lo de esta tarea, y
    haz un commit con un mensaje descriptivo en español.
-4. **No hagas push.** Lo hago yo al final de la sesión.
+4. **Pregúntame si hago push** y súbelo solo si te digo que sí, nunca por tu
+   cuenta. Así cada tarea pasa por GitHub Actions por separado y, si algo sale
+   en rojo, se sabe qué tarea lo ha roto.
+5. Después del push, comprueba con `gh run list` / `gh run watch` que GitHub
+   Actions sale en verde. Si sale en rojo, léeme el error y arréglalo antes de
+   seguir.
 
 ## Reglas de negocio que no son obvias
 
