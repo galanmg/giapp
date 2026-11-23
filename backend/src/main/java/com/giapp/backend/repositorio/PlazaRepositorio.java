@@ -6,6 +6,7 @@ import com.giapp.backend.modelo.Plaza;
 import com.giapp.backend.modelo.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface PlazaRepositorio extends JpaRepository<Plaza, Long> {
@@ -19,4 +20,7 @@ public interface PlazaRepositorio extends JpaRepository<Plaza, Long> {
             Usuario gestor);
 
     boolean existsByPlanta(Planta planta);
+
+    // Para el alta en lote: cuáles de esos números ya existen en la planta
+    List<Plaza> findByPlantaAndNumeroIn(Planta planta, Collection<String> numeros);
 }

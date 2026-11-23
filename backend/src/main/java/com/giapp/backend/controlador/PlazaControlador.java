@@ -1,6 +1,7 @@
 package com.giapp.backend.controlador;
 
 import com.giapp.backend.dto.PlazaEstadoPeticion;
+import com.giapp.backend.dto.PlazaLotePeticion;
 import com.giapp.backend.dto.PlazaPeticion;
 import com.giapp.backend.dto.PlazaRespuesta;
 import com.giapp.backend.servicio.PlazaServicio;
@@ -51,6 +52,13 @@ public class PlazaControlador {
     public PlazaRespuesta actualizar(@PathVariable Long id,
                                      @Valid @RequestBody PlazaPeticion peticion) {
         return plazaServicio.actualizar(id, peticion);
+    }
+
+    // RF-14
+    @PostMapping("/lote")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<PlazaRespuesta> crearLote(@Valid @RequestBody PlazaLotePeticion peticion) {
+        return plazaServicio.crearLote(peticion);
     }
 
     @PatchMapping("/{id}/estado")

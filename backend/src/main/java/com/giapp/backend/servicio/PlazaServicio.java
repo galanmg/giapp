@@ -1,5 +1,6 @@
 package com.giapp.backend.servicio;
 
+import com.giapp.backend.dto.PlazaLotePeticion;
 import com.giapp.backend.dto.PlazaPeticion;
 import com.giapp.backend.dto.PlazaRespuesta;
 import com.giapp.backend.modelo.Contrato;
@@ -18,10 +19,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 // Plazas de los aparcamientos del gestor autenticado (RF-13, RF-15, RF-16, RNF-18)
 @Service
 public class PlazaServicio {
+
+    // Límite de seguridad del alta en lote, contra errores al teclear el rango
+    private static final int MAXIMO_POR_LOTE = 100;
+
+    // Longitud de la columna numero de la tabla plaza
+    private static final int LONGITUD_NUMERO = 10;
 
     private final PlazaRepositorio plazaRepositorio;
     private final ContratoRepositorio contratoRepositorio;
@@ -85,6 +93,59 @@ public class PlazaServicio {
                 peticion.numero(), peticion.capacidad(), peticion.admiteCoche(), planta);
 
         return aRespuesta(plazaRepositorio.save(plaza), 0);
+    }
+
+    // RF-14. Todo o nada: si algún número ya existe en la planta, no se crea ninguna
+    // plaza y el 409 dice cuáles chocan. @Transactional deshace todo si algo falla.
+    @Transactional
+    public List<PlazaRespuesta> crearLote(PlazaLotePeticion peticion) {
+        if (peticion.numeroInicial() > peticion.numeroFinal()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El número inicial no puede ser mayor que el final");
+        }
+
+        int cantidad = peticion.numeroFinal() - peticion.numeroInicial() + 1;
+
+        if (cantidad > MAXIMO_POR_LOTE) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Como mucho se crean " + MAXIMO_POR_LOTE + " plazas por lote; se han pedido " + cantidad);
+        }
+
+        Planta planta = plantaServicio.buscarPropia(peticion.plantaId());
+
+        // Número con al menos dos cifras: S1-07, S1-08... S1-100
+        List<String> numeros = IntStream.rangeClosed(peticion.numeroInicial(), peticion.numeroFinal())
+                .mapToObj(n -> peticion.prefijo() + String.format("%02d", n))
+                .toList();
+
+        // El último es el más largo: si cabe en la columna, caben todos
+        String masLargo = numeros.get(numeros.size() - 1);
+
+        if (masLargo.length() > LONGITUD_NUMERO) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El número " + masLargo + " supera los " + LONGITUD_NUMERO + " caracteres");
+        }
+
+        List<String> repetidos = plazaRepositorio.findByPlantaAndNumeroIn(planta, numeros)
+                .stream()
+                .map(Plaza::getNumero)
+                .sorted()
+                .toList();
+
+        if (!repetidos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se ha creado ninguna plaza: ya existen en la planta " + planta.getIdentificador()
+                            + " las plazas " + String.join(", ", repetidos));
+        }
+
+        List<Plaza> nuevas = numeros.stream()
+                .map(numero -> new Plaza(numero, peticion.capacidad(), peticion.admiteCoche(), planta))
+                .toList();
+
+        return plazaRepositorio.saveAll(nuevas)
+                .stream()
+                .map(plaza -> aRespuesta(plaza, 0))
+                .toList();
     }
 
     // Los cambios no pueden dejar fuera a los contratos activos que ya tiene la plaza
