@@ -1,5 +1,6 @@
 package com.giapp.backend.controlador;
 
+import com.giapp.backend.dto.PlazaEstadoPeticion;
 import com.giapp.backend.dto.PlazaPeticion;
 import com.giapp.backend.dto.PlazaRespuesta;
 import com.giapp.backend.servicio.PlazaServicio;
@@ -7,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,8 +31,9 @@ public class PlazaControlador {
     }
 
     @GetMapping
-    public List<PlazaRespuesta> listar(@RequestParam(required = false) Long plantaId) {
-        return plazaServicio.listar(plantaId);
+    public List<PlazaRespuesta> listar(@RequestParam(required = false) Long plantaId,
+                                       @RequestParam(required = false) Long aparcamientoId) {
+        return plazaServicio.listar(plantaId, aparcamientoId);
     }
 
     @GetMapping("/{id}")
@@ -48,6 +51,12 @@ public class PlazaControlador {
     public PlazaRespuesta actualizar(@PathVariable Long id,
                                      @Valid @RequestBody PlazaPeticion peticion) {
         return plazaServicio.actualizar(id, peticion);
+    }
+
+    @PatchMapping("/{id}/estado")
+    public PlazaRespuesta cambiarEstado(@PathVariable Long id,
+                                        @Valid @RequestBody PlazaEstadoPeticion peticion) {
+        return plazaServicio.cambiarEstado(id, peticion.estado());
     }
 
     @DeleteMapping("/{id}")

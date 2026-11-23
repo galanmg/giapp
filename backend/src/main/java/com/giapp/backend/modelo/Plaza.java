@@ -64,4 +64,23 @@ public class Plaza {
 
         return mediasOcupadas + tipo.getMediasPlazas() <= capacidad;
     }
+
+    // Situación calculada a partir de las medias plazas ocupadas por contratos activos (RF-16).
+    // No se guarda: depende de los contratos, que cambian sin tocar la plaza.
+    public String situacion(int mediasOcupadas) {
+
+        if (estado == EstadoPlaza.FUERA_DE_SERVICIO) {
+            return "FUERA_DE_SERVICIO";
+        }
+
+        if (mediasOcupadas == 0) {
+            return "LIBRE";
+        }
+
+        if (mediasOcupadas >= capacidad) {
+            return "COMPLETA";
+        }
+
+        return "PARCIAL";
+    }
 }

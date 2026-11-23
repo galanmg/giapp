@@ -6,6 +6,8 @@ public record PlazaRespuesta(
         int capacidad,
         boolean admiteCoche,
         String estado,
-        String planta
+        String planta,
+        int mediasOcupadas,
+        String situacion
 ) {
 }
