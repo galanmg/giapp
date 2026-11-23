@@ -28,7 +28,8 @@ import java.util.List;
  * JSON con el formato común ErrorRespuesta.
  *
  * Los 401 y 403 de Spring Security no pasan por aquí: se producen en la
- * cadena de filtros, antes de llegar a ningún controlador.
+ * cadena de filtros, antes de llegar a ningún controlador. Esos los escribe
+ * ManejadorErroresSeguridad con el mismo formato.
  */
 @RestControllerAdvice
 public class ManejadorErrores {

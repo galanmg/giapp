@@ -1,6 +1,5 @@
 package com.giapp.backend.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,9 +21,12 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtFiltro jwtFiltro;
+    private final ManejadorErroresSeguridad manejadorErroresSeguridad;
 
-    public SecurityConfig(JwtFiltro jwtFiltro) {
+    public SecurityConfig(JwtFiltro jwtFiltro,
+                          ManejadorErroresSeguridad manejadorErroresSeguridad) {
         this.jwtFiltro = jwtFiltro;
+        this.manejadorErroresSeguridad = manejadorErroresSeguridad;
     }
 
     @Bean
@@ -40,9 +42,8 @@ public class SecurityConfig {
                 .sessionManagement(sesion -> sesion
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(excepciones -> excepciones
-                        .authenticationEntryPoint((peticion, respuesta, error) ->
-                                respuesta.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                                        "Hace falta autenticarse")))
+                        .authenticationEntryPoint(manejadorErroresSeguridad)
+                        .accessDeniedHandler(manejadorErroresSeguridad))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
