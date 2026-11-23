@@ -5,18 +5,24 @@ import com.giapp.backend.dto.ContratoRespuesta;
 import com.giapp.backend.modelo.Aparcamiento;
 import com.giapp.backend.modelo.Contrato;
 import com.giapp.backend.modelo.Plaza;
+import com.giapp.backend.modelo.TarifaAlquiler;
 import com.giapp.backend.modelo.Usuario;
 import com.giapp.backend.modelo.Vehiculo;
 import com.giapp.backend.modelo.enums.EstadoContrato;
+import com.giapp.backend.modelo.enums.TipoVehiculo;
 import com.giapp.backend.repositorio.ClienteAparcamientoRepositorio;
 import com.giapp.backend.repositorio.ContratoRepositorio;
 import com.giapp.backend.repositorio.PlazaRepositorio;
+import com.giapp.backend.repositorio.TarifaAlquilerRepositorio;
 import com.giapp.backend.repositorio.UsuarioRepositorio;
 import com.giapp.backend.repositorio.VehiculoRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 public class ContratoServicio {
@@ -26,17 +32,20 @@ public class ContratoServicio {
     private final VehiculoRepositorio vehiculoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final ClienteAparcamientoRepositorio clienteAparcamientoRepositorio;
+    private final TarifaAlquilerRepositorio tarifaAlquilerRepositorio;
 
     public ContratoServicio(ContratoRepositorio contratoRepositorio,
                             PlazaRepositorio plazaRepositorio,
                             VehiculoRepositorio vehiculoRepositorio,
                             UsuarioRepositorio usuarioRepositorio,
-                            ClienteAparcamientoRepositorio clienteAparcamientoRepositorio) {
+                            ClienteAparcamientoRepositorio clienteAparcamientoRepositorio,
+                            TarifaAlquilerRepositorio tarifaAlquilerRepositorio) {
         this.contratoRepositorio = contratoRepositorio;
         this.plazaRepositorio = plazaRepositorio;
         this.vehiculoRepositorio = vehiculoRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
         this.clienteAparcamientoRepositorio = clienteAparcamientoRepositorio;
+        this.tarifaAlquilerRepositorio = tarifaAlquilerRepositorio;
     }
 
     @Transactional
@@ -70,10 +79,14 @@ public class ContratoServicio {
                             + ", solicitadas: " + vehiculo.getTipo().getMediasPlazas());
         }
 
+        BigDecimal precioMensual = peticion.precioMensual() != null
+                ? peticion.precioMensual()
+                : precioDeTarifa(aparcamiento, vehiculo.getTipo(), peticion.fechaInicio());
+
         Contrato contrato = new Contrato(
                 peticion.fechaInicio(),
                 peticion.periodicidad(),
-                peticion.precioMensual(),
+                precioMensual,
                 titular,
                 plaza,
                 vehiculo);
@@ -82,6 +95,17 @@ public class ContratoServicio {
     }
 
     // Metodos internos
+
+    // Precio de la tarifa vigente en la fecha de inicio del contrato. El contrato
+    // guarda una copia: si la tarifa sube después, el contrato mantiene su precio.
+    private BigDecimal precioDeTarifa(Aparcamiento aparcamiento, TipoVehiculo tipo, LocalDate fecha) {
+        return tarifaAlquilerRepositorio.buscarVigente(aparcamiento, tipo, fecha)
+                .map(TarifaAlquiler::getPrecioMensual)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "No se ha indicado el precio mensual y no hay tarifa vigente para "
+                                + tipo + " en el aparcamiento " + aparcamiento.getNombre()
+                                + " el " + fecha + ". Indica el precio o crea antes la tarifa"));
+    }
 
     private int mediasPlazasOcupadas(Plaza plaza) {
         return contratoRepositorio.findByPlazaAndEstado(plaza, EstadoContrato.ACTIVO)
