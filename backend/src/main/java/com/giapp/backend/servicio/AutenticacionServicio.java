@@ -5,7 +5,6 @@ import com.giapp.backend.dto.LoginRespuesta;
 import com.giapp.backend.dto.RegistroPeticion;
 import com.giapp.backend.dto.UsuarioRespuesta;
 import com.giapp.backend.modelo.Usuario;
-import com.giapp.backend.modelo.enums.Rol;
 import com.giapp.backend.repositorio.UsuarioRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,40 +18,21 @@ public class AutenticacionServicio {
     private final UsuarioRepositorio usuarioRepositorio;
     private final PasswordEncoder passwordEncoder;
     private final JwtServicio jwtServicio;
+    private final ClienteServicio clienteServicio;
 
     public AutenticacionServicio(UsuarioRepositorio usuarioRepositorio,
                                  PasswordEncoder passwordEncoder,
-                                 JwtServicio jwtServicio) {
+                                 JwtServicio jwtServicio,
+                                 ClienteServicio clienteServicio) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.passwordEncoder = passwordEncoder;
         this.jwtServicio = jwtServicio;
+        this.clienteServicio = clienteServicio;
     }
 
-    @Transactional
+    // El registro público es un alta de cliente: siempre con rol CLIENTE
     public UsuarioRespuesta registrar(RegistroPeticion peticion) {
-
-        if (usuarioRepositorio.existsByEmail(peticion.email())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Ya existe un usuario con el email " + peticion.email());
-        }
-
-        Usuario usuario = new Usuario(
-                peticion.nombre(),
-                peticion.apellidos(),
-                peticion.email(),
-                passwordEncoder.encode(peticion.password()),
-                peticion.telefono(),
-                Rol.CLIENTE);
-
-        Usuario guardado = usuarioRepositorio.save(usuario);
-
-        return new UsuarioRespuesta(
-                guardado.getId(),
-                guardado.getNombre(),
-                guardado.getApellidos(),
-                guardado.getEmail(),
-                guardado.getTelefono(),
-                guardado.getRol().name());
+        return clienteServicio.crear(peticion);
     }
 
     @Transactional(readOnly = true)

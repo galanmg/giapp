@@ -6,6 +6,7 @@ public record UsuarioRespuesta(
         String apellidos,
         String email,
         String telefono,
-        String rol
+        String rol,
+        boolean activo
 ) {
 }

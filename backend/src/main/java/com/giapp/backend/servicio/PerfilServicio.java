@@ -62,6 +62,7 @@ public class PerfilServicio {
                 usuario.getApellidos(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
-                usuario.getRol().name());
+                usuario.getRol().name(),
+                usuario.isActivo());
     }
 }
