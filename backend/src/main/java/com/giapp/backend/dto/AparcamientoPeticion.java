@@ -1,7 +1,6 @@
 package com.giapp.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record AparcamientoPeticion(
@@ -16,9 +15,6 @@ public record AparcamientoPeticion(
 
         @NotBlank(message = "La ciudad es obligatoria")
         @Size(max = 100)
-        String ciudad,
-
-        @NotNull(message = "Hay que indicar el gestor")
-        Long gestorId
+        String ciudad
 ) {
 }

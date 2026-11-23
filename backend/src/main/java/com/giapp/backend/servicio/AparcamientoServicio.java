@@ -4,9 +4,7 @@ import com.giapp.backend.dto.AparcamientoPeticion;
 import com.giapp.backend.dto.AparcamientoRespuesta;
 import com.giapp.backend.modelo.Aparcamiento;
 import com.giapp.backend.modelo.Usuario;
-import com.giapp.backend.modelo.enums.Rol;
 import com.giapp.backend.repositorio.AparcamientoRepositorio;
-import com.giapp.backend.repositorio.UsuarioRepositorio;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,17 +16,18 @@ import java.util.List;
 public class AparcamientoServicio {
 
     private final AparcamientoRepositorio aparcamientoRepositorio;
-    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioActualServicio usuarioActualServicio;
 
     public AparcamientoServicio(AparcamientoRepositorio aparcamientoRepositorio,
-                                UsuarioRepositorio usuarioRepositorio) {
+                                UsuarioActualServicio usuarioActualServicio) {
         this.aparcamientoRepositorio = aparcamientoRepositorio;
-        this.usuarioRepositorio = usuarioRepositorio;
+        this.usuarioActualServicio = usuarioActualServicio;
     }
 
+    // Solo los aparcamientos del gestor autenticado (RNF-16)
     @Transactional(readOnly = true)
     public List<AparcamientoRespuesta> listar() {
-        return aparcamientoRepositorio.findAll()
+        return aparcamientoRepositorio.findByGestor(usuarioActualServicio.obtener())
                 .stream()
                 .map(this::aRespuesta)
                 .toList();
@@ -36,55 +35,51 @@ public class AparcamientoServicio {
 
     @Transactional(readOnly = true)
     public AparcamientoRespuesta buscarPorId(Long id) {
-        return aRespuesta(buscarEntidad(id));
+        return aRespuesta(buscarPropio(id));
     }
 
+    // El gestor del aparcamiento es siempre quien lo crea
     @Transactional
     public AparcamientoRespuesta crear(AparcamientoPeticion peticion) {
-        Usuario gestor = buscarGestor(peticion.gestorId());
-
         Aparcamiento aparcamiento = new Aparcamiento(
-                peticion.nombre(), peticion.direccion(), peticion.ciudad(), gestor);
+                peticion.nombre(), peticion.direccion(), peticion.ciudad(),
+                usuarioActualServicio.obtener());
 
         return aRespuesta(aparcamientoRepositorio.save(aparcamiento));
     }
 
     @Transactional
     public AparcamientoRespuesta actualizar(Long id, AparcamientoPeticion peticion) {
-        Aparcamiento aparcamiento = buscarEntidad(id);
+        Aparcamiento aparcamiento = buscarPropio(id);
 
         aparcamiento.setNombre(peticion.nombre());
         aparcamiento.setDireccion(peticion.direccion());
         aparcamiento.setCiudad(peticion.ciudad());
-        aparcamiento.setGestor(buscarGestor(peticion.gestorId()));
 
         return aRespuesta(aparcamiento);
     }
 
     @Transactional
     public void eliminar(Long id) {
-        aparcamientoRepositorio.delete(buscarEntidad(id));
+        aparcamientoRepositorio.delete(buscarPropio(id));
     }
 
-    // Metodos internos
+    // Métodos internos
 
-    private Aparcamiento buscarEntidad(Long id) {
-        return aparcamientoRepositorio.findById(id)
+    // 404 si no existe; 403 si existe pero lo administra otro gestor
+    private Aparcamiento buscarPropio(Long id) {
+        Aparcamiento aparcamiento = aparcamientoRepositorio.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "No existe el aparcamiento con id " + id));
-    }
 
-    private Usuario buscarGestor(Long id) {
-        Usuario usuario = usuarioRepositorio.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "No existe el usuario con id " + id));
+        Usuario gestor = usuarioActualServicio.obtener();
 
-        if (usuario.getRol() != Rol.GESTOR) {
+        if (!aparcamiento.getGestor().getId().equals(gestor.getId())) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El usuario con id " + id + " no es un gestor");
+                    HttpStatus.FORBIDDEN, "No administras el aparcamiento con id " + id);
         }
 
-        return usuario;
+        return aparcamiento;
     }
 
     private AparcamientoRespuesta aRespuesta(Aparcamiento aparcamiento) {
