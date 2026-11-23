@@ -32,6 +32,12 @@ class Aparcamiento {
   - ciudad : String
 }
 
+class ClienteAparcamiento {
+  - id : Long
+  - fechaAlta : LocalDate
+  - activo : boolean
+}
+
 class Planta {
   - id : Long
   - identificador : String
@@ -116,6 +122,8 @@ class RegistroAcceso {
 Usuario "1" -- "0..*" Aparcamiento : gestiona >
 Usuario "1" -- "0..*" Vehiculo : posee >
 Usuario "1" -- "0..*" Contrato : titular de >
+Usuario "1" -- "0..*" ClienteAparcamiento : cliente en >
+Aparcamiento "1" -- "0..*" ClienteAparcamiento
 
 Aparcamiento "1" *-- "1..*" Planta
 Aparcamiento "1" *-- "1..*" TarifaAlquiler

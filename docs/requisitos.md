@@ -16,20 +16,22 @@ libre aunque queden fuera de secuencia dentro de su tabla. Los diagramas de
 
 | Nº | Requisito |
 |---|---|
-| RF-01 | El gestor podrá dar de alta a un cliente registrando sus datos personales y de contacto. |
+| RF-01 | El gestor podrá dar de alta a un cliente que no tenga cuenta, registrando sus datos personales y de contacto, y quedará vinculado al aparcamiento que indique. |
 | RF-02 | El usuario podrá iniciar sesión con su correo y contraseña, y el sistema le devolverá un token de acceso. |
 | RF-03 | El usuario podrá cerrar sesión, invalidando el token en el dispositivo. |
 | RF-04 | El usuario podrá consultar y modificar sus datos de perfil y cambiar su contraseña. |
 | RF-05 | El sistema asignará a cada usuario un rol (gestor o cliente) que determinará las funciones a las que tiene acceso. |
-| RF-06 | El gestor podrá consultar, editar y desactivar las cuentas de sus clientes. |
+| RF-06 | El gestor podrá consultar los clientes de sus aparcamientos y dar de baja a un cliente en uno de ellos, sin afectar a su cuenta ni a su vinculación con otros aparcamientos. |
+| RF-54 | Cualquier persona podrá registrarse en la aplicación como cliente indicando sus datos personales, su correo y una contraseña. |
+| RF-55 | El gestor podrá buscar a un usuario registrado por su correo electrónico exacto y vincularlo como cliente a uno de sus aparcamientos. Un mismo cliente podrá estar vinculado a varios aparcamientos. |
 
 ### Vehículos
 
 | Nº | Requisito |
 |---|---|
-| RF-07 | El gestor podrá asociar uno o varios vehículos a un cliente, indicando matrícula, marca, modelo y tipo (coche o moto). |
-| RF-08 | El gestor podrá editar o eliminar los vehículos de un cliente. |
-| RF-09 | El cliente podrá consultar los vehículos asociados a su cuenta. |
+| RF-07 | El gestor podrá asociar uno o varios vehículos a un cliente de sus aparcamientos, indicando matrícula, marca, modelo y tipo (coche o moto). |
+| RF-08 | El gestor podrá editar o eliminar los vehículos de los clientes de sus aparcamientos. |
+| RF-09 | El cliente podrá registrar, consultar, editar y eliminar los vehículos de su cuenta. |
 
 ### Aparcamientos, plantas y plazas
 
@@ -128,6 +130,7 @@ libre aunque queden fuera de secuencia dentro de su tabla. Los diagramas de
 | RNF-15 | El entorno de desarrollo será reproducible mediante contenedores Docker. |
 | RNF-16 | La arquitectura permitirá que un mismo gestor administre varios aparcamientos sin cambios en el código. |
 | RNF-17 | El cálculo de la regularización eléctrica estará cubierto por pruebas unitarias, incluyendo los casos de consumo superior e inferior a la provisión. |
+| RNF-18 | Cada gestor solo podrá consultar y modificar los datos de sus propios aparcamientos y de los clientes vinculados a ellos. |
 
 ---
 
@@ -136,7 +139,7 @@ libre aunque queden fuera de secuencia dentro de su tabla. Los diagramas de
 ### Funcionalidades mínimas viables
 
 1. Autenticación con JWT y dos roles, con los endpoints de la API protegidos
-   según el rol. *(RF-01 a RF-06)*
+   según el rol. *(RF-01 a RF-06, RF-54, RF-55)*
 2. Gestión completa del inventario: aparcamientos, plantas y plazas con
    capacidad en medias plazas, más el alta de clientes y sus vehículos.
    *(RF-07 a RF-19)*

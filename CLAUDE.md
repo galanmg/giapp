@@ -47,8 +47,29 @@ Al terminar cada tarea, y antes de pasar a la siguiente:
 
 ## Reglas de negocio que no son obvias
 
-Estas tres son lo que distingue al proyecto. Si las implementas mal, el proyecto
-pierde su sentido.
+Estas cuatro son lo que distingue al proyecto. Si las implementas mal, el
+proyecto pierde su sentido.
+
+### Cada aparcamiento es un espacio independiente
+
+- Los usuarios son únicos en toda la aplicación (email único). Cualquiera puede
+  registrarse como cliente (RF-54), o le da de alta un gestor (RF-01).
+- Un cliente pertenece a un aparcamiento mediante `ClienteAparcamiento`, no a un
+  gestor. Puede estar vinculado a varios aparcamientos, de gestores distintos.
+- El gestor encuentra a un usuario solo por su **email exacto** y lo vincula a
+  uno de sus aparcamientos (RF-55). Nunca puede listar usuarios que no sean
+  clientes de sus aparcamientos.
+- Cada gestor solo ve y modifica sus aparcamientos y los clientes vinculados a
+  ellos (RNF-18). Sobre datos de otro gestor: 403.
+- El gestor da de baja a un cliente **en un aparcamiento** (`activo` de
+  `ClienteAparcamiento`), nunca desactiva su cuenta (`Usuario.activo`): eso le
+  dejaría fuera de todos sus aparcamientos. Los datos personales los edita el
+  propio usuario desde su perfil.
+- Un vehículo pertenece a un usuario. La matrícula es única por propietario, no
+  global: un coche vendido puede registrarlo su nuevo dueño.
+- Un contrato en un aparcamiento exige que el cliente esté vinculado y activo en
+  él. No se puede dar de baja a un cliente con contratos activos en ese
+  aparcamiento.
 
 ### Medias plazas
 
@@ -119,15 +140,16 @@ campos eléctricos a ninguna entidad.
 
 ## Modelo de datos
 
-Trece entidades en el diseño. El diagrama está en
+Catorce entidades en el diseño. El diagrama está en
 `docs/uml/diagrama-clases.puml`; los enumerados, en
 `docs/uml/diagrama-clases-enums.puml`.
 
 | Entidad | Estado | Notas |
 |---|---|---|
 | `Usuario` | Implementada | Una sola tabla con un campo `rol` (GESTOR o CLIENTE), no herencia |
-| `Vehiculo` | Implementada | Tipo COCHE o MOTO, nada más |
+| `Vehiculo` | Implementada | Tipo COCHE o MOTO. Matrícula única por propietario |
 | `Aparcamiento` | Implementada | Un gestor puede tener varios |
+| `ClienteAparcamiento` | Pendiente | Vínculo cliente-aparcamiento, con `fechaAlta` y `activo` |
 | `Planta` | Implementada | Compuesta en Aparcamiento |
 | `Plaza` | Implementada | `capacidad` y `admiteCoche`; ver medias plazas |
 | `TarifaAlquiler` | Implementada | Por tipo de vehículo, con `vigenteDesde` |
