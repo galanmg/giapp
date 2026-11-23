@@ -5,6 +5,7 @@ public record UsuarioRespuesta(
         String nombre,
         String apellidos,
         String email,
+        String telefono,
         String rol
 ) {
 }

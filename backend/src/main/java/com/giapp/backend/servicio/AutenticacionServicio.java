@@ -51,6 +51,7 @@ public class AutenticacionServicio {
                 guardado.getNombre(),
                 guardado.getApellidos(),
                 guardado.getEmail(),
+                guardado.getTelefono(),
                 guardado.getRol().name());
     }
 
