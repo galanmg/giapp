@@ -5,11 +5,13 @@ import com.giapp.backend.modelo.Vehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface VehiculoRepositorio extends JpaRepository<Vehiculo, Long> {
 
-    List<Vehiculo> findByPropietario(Usuario propietario);
+    List<Vehiculo> findByPropietarioOrderByMatriculaAsc(Usuario propietario);
 
-    Optional<Vehiculo> findByMatricula(String matricula);
+    // La matrícula es única por propietario
+    boolean existsByPropietarioAndMatricula(Usuario propietario, String matricula);
+
+    boolean existsByPropietarioAndMatriculaAndIdNot(Usuario propietario, String matricula, Long id);
 }

@@ -7,13 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// La matrícula es única por propietario, no global: un coche vendido puede
+// registrarlo su nuevo dueño aunque siga en la cuenta del anterior.
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @Table(
         name = "vehiculo",
-        uniqueConstraints = @UniqueConstraint(name = "uk_vehiculo_matricula", columnNames = "matricula")
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_vehiculo_propietario_matricula",
+                columnNames = {"propietario_id", "matricula"})
 )
 public class Vehiculo {
     @Id
